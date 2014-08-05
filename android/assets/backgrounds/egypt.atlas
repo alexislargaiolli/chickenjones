@@ -1,0 +1,66 @@
+
+egypt.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+BK
+  rotate: false
+  xy: 1, 829
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
+Dunes
+  rotate: false
+  xy: 1, 393
+  size: 1920, 434
+  orig: 1920, 434
+  offset: 0, 0
+  index: -1
+Pyramids-2
+  rotate: false
+  xy: 1, 1
+  size: 591, 390
+  orig: 591, 390
+  offset: 0, 0
+  index: -1
+Clouds-2
+  rotate: false
+  xy: 594, 228
+  size: 573, 163
+  orig: 573, 163
+  offset: 0, 0
+  index: -1
+Clouds-1
+  rotate: false
+  xy: 594, 46
+  size: 495, 180
+  orig: 495, 180
+  offset: 0, 0
+  index: -1
+Pyramids-3
+  rotate: false
+  xy: 1169, 87
+  size: 419, 304
+  orig: 419, 304
+  offset: 0, 0
+  index: -1
+Sun
+  rotate: false
+  xy: 1590, 24
+  size: 369, 367
+  orig: 369, 367
+  offset: 0, 0
+  index: -1
+
+egypt2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Pyramids-1
+  rotate: false
+  xy: 1, 1
+  size: 1002, 660
+  orig: 1002, 660
+  offset: 0, 0
+  index: -1

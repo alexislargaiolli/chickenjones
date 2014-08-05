@@ -1,0 +1,80 @@
+{
+width: 1920,
+height: 1080,
+speedX: 150,
+speedY: 0,
+layers: [
+	{
+		name: BK,
+		paralaxX: 0,
+		paralaxY: 0,
+		startX: 0,
+		startY: 0,
+		padX: 0,
+		padY: 0
+	},
+	{
+		name: Sun,
+		paralaxX: 0,
+		paralaxY: 0,
+		startX: 20,
+		startY: 620,
+		padX: 0,
+		padY: 0
+	},
+	{
+		name: Pyramids-3,
+		paralaxX: -0.01,
+		paralaxY: 0,
+		startX: 1000,
+		startY: 230,
+		padX: 0,
+		padY: 0
+	},
+	{
+		name: Pyramids-2,
+		paralaxX: -0.02,
+		paralaxY: 0,
+		startX: 1400,
+		startY: 230,
+		padX: 0,
+		padY: 0
+	},
+	{
+		name: Pyramids-1,
+		paralaxX: -0.05,
+		paralaxY: 0,
+		startX: 0,
+		startY: 200,
+		padX: 0,
+		padY: 0
+	},	
+	{
+		name: Dunes,
+		paralaxX: 0.1,
+		paralaxY: 0,
+		startX: 0,
+		startY: 0,
+		padX: 0,
+		padY: 0
+	},
+	{
+		name: Clouds-1,
+		paralaxX: 0.01,
+		paralaxY: 0,
+		startX: 100,
+		startY: 620,
+		padX: 0,
+		padY: 0
+	},
+	{
+		name: Clouds-2,
+		paralaxX: 0.01,
+		paralaxY: 0,
+		startX: 1400,
+		startY: 800,
+		padX: 0,
+		padY: 0
+	}
+]
+}
