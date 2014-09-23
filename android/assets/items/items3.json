@@ -1,1 +1,55 @@
-[{class:fr.alex.games.items.Item,gold:100,name:item.1.name,passives:[{carac:BOW_STRENGTH,type:ADD,bonus:10}],desc:item.1.desc,icon:item_1_icon,id:1},{class:fr.alex.games.items.Item,gold:100,name:item.2.name,passives:[{carac:JUMP_STRENGTH,type:ADD,bonus:1}],desc:item.2.desc,icon:item_2_icon,id:2}]
+[
+{
+	class: fr.alex.games.items.Item,
+	gold: 100,
+	name: item.1.name,
+	passives: [
+		{
+			carac: BOW_STRENGTH,
+			type: ADD,
+			bonus: 1
+		}
+	],
+	desc: item.1.desc,
+	icon: item_1_icon,
+	id: 1
+},
+{
+	class: fr.alex.games.items.Item,
+	gold: 100,
+	name: item.2.name,
+	passives: [
+		{
+			carac: BOW_STRENGTH,
+			type: ADD,
+			bonus: 1
+		}
+	],
+	desc: item.2.desc,
+	icon: item_2_icon,
+	id: 2
+},
+{
+	class: fr.alex.games.items.Item,
+	gold: 100,
+	name: item.3.name,
+	actives: [
+		{
+			passives: [
+				{
+					carac: TIME_SPEED,
+					type: MUL,
+					bonus: 3
+				}
+			],
+			name: item.3.skill.1.name,
+			cooldown: 30,
+			desc: item.3.skill.1.desc,
+			duration: 5
+		}
+	],
+	desc: item.3.desc,
+	icon: item_3_icon,
+	id: 3
+}
+]

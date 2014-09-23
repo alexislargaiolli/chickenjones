@@ -31,7 +31,10 @@ public class ItemManager {
 		Gdx.app.log("ItemManager", "Localized items");
 		for (Item i : items) {
 			i.setName(LocalManager.get().getObjectString(i.getName()));
-			i.setDesc(LocalManager.get().getObjectString(i.getDesc()));			
+			i.setDesc(LocalManager.get().getObjectString(i.getDesc()));
+			for(ActiveSkill skill : i.getActives()){
+				skill.setName(LocalManager.get().getObjectString(skill.getName()));
+			}
 		}
 		
 		refreshList();

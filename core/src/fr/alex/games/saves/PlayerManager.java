@@ -29,7 +29,7 @@ public class PlayerManager {
 	}
 
 	public int getGold() {
-		return playerInfo.getInteger(GOLD_KEY, 0);
+		return playerInfo.getInteger(GOLD_KEY, 100);
 	}
 
 	public void addGold(int val) {

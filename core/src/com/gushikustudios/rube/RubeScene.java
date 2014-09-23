@@ -328,4 +328,28 @@ public class RubeScene
 	   System.out.println("Image count: " + ((mImages != null) ? mImages.size : 0));
 	   
    }
+
+public int getStepsPerSecond() {
+	return stepsPerSecond;
+}
+
+public void setStepsPerSecond(int stepsPerSecond) {
+	this.stepsPerSecond = stepsPerSecond;
+}
+
+public int getPositionIterations() {
+	return positionIterations;
+}
+
+public void setPositionIterations(int positionIterations) {
+	this.positionIterations = positionIterations;
+}
+
+public int getVelocityIterations() {
+	return velocityIterations;
+}
+
+public void setVelocityIterations(int velocityIterations) {
+	this.velocityIterations = velocityIterations;
+}
 }

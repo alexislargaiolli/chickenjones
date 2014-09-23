@@ -3,7 +3,6 @@ package fr.alex.games.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -21,7 +20,7 @@ public abstract class MenuScreen implements Screen{
 		stage = new Stage(new ExtendViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT));
 		
 		mainTable = new Table(GM.skin);
-		Image bg = new Image(GM.assetManager.get("data/bg1.png", Texture.class));
+		Image bg = new Image(GM.skin.getDrawable("background"));
 		bg.setFillParent(true);
 		stage.addActor(bg);
 		

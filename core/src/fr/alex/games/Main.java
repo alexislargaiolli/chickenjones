@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.gushikustudios.rube.RubeScene;
 import com.gushikustudios.rube.loader.RubeSceneAsyncLoader;
@@ -17,15 +16,19 @@ import fr.alex.games.screens.ScreenManager;
 import fr.alex.games.screens.Screens;
 
 public class Main extends Game {
+	
+	public static final String SCENES_PATH = "scenes/";
+	public static final String SCENES_ATLAS_PATH = "scenes/atlas/";
+	public static final String COMMON_ATLAS_PATH = "scenes/atlas/common.atlas";
+	public static final String BACKGROUND_ATLAS_PATH = "backgrounds/";
+	public static final String PARTICLES_PATH = "particles/";
+	
 	@Override
 	public void create() {
 		Gdx.app.log("Main", "init");
-		GM.assetManager = new AssetManager();
-		GM.assetManager.load("data/bg1.png", Texture.class);
-		GM.assetManager.finishLoading();
-		GM.assetManager.setLoader(RubeScene.class, new RubeSceneAsyncLoader(new InternalFileHandleResolver()));
-		
-		GM.skin = new Skin(Gdx.files.internal("uiskin.json"));
+		GM.assetManager = new AssetManager();		
+		GM.assetManager.setLoader(RubeScene.class, new RubeSceneAsyncLoader(new InternalFileHandleResolver()));		
+		GM.skin = new Skin(Gdx.files.internal("ui/ui.json"));
 		ScreenManager.getInstance().initialize(this);
 		ScreenManager.getInstance().show(Screens.INTRO);
 		LocalManager.get();
@@ -33,7 +36,6 @@ public class Main extends Game {
 		ItemManager.get();
 		
 		Gdx.input.setCatchBackKey(true);
-		Gdx.app.log("Main", "init over");
 		
 		
 		/*PlayerManager.get().addGold(100);
@@ -63,9 +65,28 @@ public class Main extends Game {
 		ps2.setBonus(1);
 		i2.getPassives().add(ps);
 		
+		Item i3 = new Item();
+		i3.setId(3);
+		i3.setName("item.3.name");
+		i3.setDesc("item.3.desc");
+		i3.setGold(100);
+		i3.setIcon("item_3_icon");
+		ActiveSkill as = new ActiveSkill();
+		as.setName("item.3.skill.1.name");
+		as.setDesc("item.3.skill.1.desc");
+		as.setCooldown(30);
+		as.setDuration(5);
+		ps = new PassiveSkill();
+		ps.setBonus(2);
+		ps.setCarac(Caracteristic.TIME_SPEED);
+		ps.setType(ModifType.DIV);
+		as.getPassives().add(ps);
+		i3.getActives().add(as);
+		
 		ArrayList<Item> items = new ArrayList<Item>();
 		items.add(i);
 		items.add(i2);
+		items.add(i3);
 		Json json = new Json();
 		FileHandle f = Gdx.files.local("/home/jahal/items/items.json");
 		

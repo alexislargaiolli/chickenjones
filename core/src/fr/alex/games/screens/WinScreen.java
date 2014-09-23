@@ -12,24 +12,31 @@ import fr.alex.games.localization.LocalManager;
 import fr.alex.games.saves.PlayerManager;
 
 public class WinScreen extends MenuScreen {	
-	private Label earnedGoldLabel, totalGoldLabel;
+	private Label earnedGoldLabel, totalGoldLabel, arrowFiredLabel, hitCountLabel, precisionLabel;
 	private TextButton btReplay, btNext;
 	private float animTime1, animTime2, startGold, endGold;
-	private static final float ANIM_DURATION = 2;
+	private static final float ANIM_DURATION = 1.5f;
 
 	@Override
 	public void show() {
-		
+		PlayerManager.get().setLevelFinish(GM.sceneIndex);
 		startGold = PlayerManager.get().getGold();
 		totalGoldLabel.setText(LocalManager.get().getHudBundle().format("win.gold.total", startGold));
 		endGold = startGold + GM.gold;
 		PlayerManager.get().addGold(GM.gold);	
 		earnedGoldLabel.setText("0");
+		arrowFiredLabel.setText(LocalManager.get().getHudBundle().format("win.arrow.count", GM.arrowFiredCount));
+		hitCountLabel.setText(LocalManager.get().getHudBundle().format("win.hit.count", GM.hitCount));
+		int accuracy = (GM.hitCount * 100 / GM.arrowFiredCount);		
+		precisionLabel.setText(LocalManager.get().getHudBundle().format("win.accuarcy", accuracy));
 		animTime1 = 0;
 		animTime2 = 0;
 		
-		btReplay.addAction(Actions.sequence(Actions.alpha(0, 0), Actions.delay(4, Actions.alpha(1f, .5f))));
-		btNext.addAction(Actions.sequence(Actions.alpha(0, 0), Actions.delay(4.5f, Actions.alpha(1f, .5f))));
+		arrowFiredLabel.addAction(Actions.sequence(Actions.alpha(0, 0), Actions.delay(3, Actions.alpha(1f, .5f))));
+		hitCountLabel.addAction(Actions.sequence(Actions.alpha(0, 0), Actions.delay(3.5f, Actions.alpha(1f, .5f))));
+		precisionLabel.addAction(Actions.sequence(Actions.alpha(0, 0), Actions.delay(4f, Actions.alpha(1f, .5f))));
+		btReplay.addAction(Actions.sequence(Actions.alpha(0, 0), Actions.delay(4.5f, Actions.alpha(1f, .5f))));
+		btNext.addAction(Actions.sequence(Actions.alpha(0, 0), Actions.delay(5f, Actions.alpha(1f, .5f))));
 		super.show();
 	}
 
@@ -60,6 +67,18 @@ public class WinScreen extends MenuScreen {
 		
 		totalGoldLabel = new Label("", GM.skin);
 		mainTable.add(totalGoldLabel).colspan(2);
+		mainTable.row().expand();
+		
+		arrowFiredLabel = new Label("", GM.skin);
+		mainTable.add(arrowFiredLabel).colspan(2);
+		mainTable.row().expand();
+		
+		hitCountLabel = new Label("", GM.skin);
+		mainTable.add(hitCountLabel).colspan(2);
+		mainTable.row().expand();		
+		
+		precisionLabel = new Label("", GM.skin);
+		mainTable.add(precisionLabel).colspan(2);
 		mainTable.row().expand();
 		
 		btReplay = new TextButton(LocalManager.get().getHUDString("win.retry"), GM.skin);

@@ -14,7 +14,7 @@ public class CustomListItem extends Table {
 
 	public CustomListItem(Item item, Skin skin) {
 		super();
-		icon = new Image(skin.getRegion("check-on"));
+		icon = new Image(skin.getRegion("Help"));
 		this.add(icon).width(64).height(64);
 		this.item = item;
 		lbName = new Label(item.getName(), skin);

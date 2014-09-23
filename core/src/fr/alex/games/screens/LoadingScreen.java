@@ -2,31 +2,30 @@ package fr.alex.games.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.gushikustudios.rube.RubeScene;
 import com.gushikustudios.rube.loader.RubeSceneLoader;
 
 import fr.alex.games.GM;
+import fr.alex.games.Main;
 
-public class LoadingScreen extends MenuScreen{
-	
+public class LoadingScreen extends MenuScreen {
+
 	private Label message;
 	private boolean finishLoading;
 
 	@Override
 	public void render(float delta) {
-		finishLoading = GM.assetManager.update();		
-		if(finishLoading){
+		finishLoading = GM.assetManager.update();
+		if (finishLoading) {
 			message.setText("Cliquez pour commencer");
-		}
-		else{
-			message.setText("Chargement: " + GM.assetManager.getProgress() + "%" );
+		} else {
+			message.setText("Chargement: " + MathUtils.round(GM.assetManager.getProgress()) + "%");
 		}
 		if (Gdx.input.justTouched() && finishLoading) {
-			//GM.scene = GM.assetManager.get("scenes/" + GM.sceneFile, RubeScene.class);
-			GM.atlas = GM.assetManager.get("bow.atlas", TextureAtlas.class);
-			GM.bgAtlas = GM.assetManager.get("backgrounds/egypt.atlas", TextureAtlas.class);
-			((GameScreen) ScreenManager.getInstance().getScreen(Screens.GAME)).init();
+			GM.commonAtlas = GM.assetManager.get(Main.COMMON_ATLAS_PATH, TextureAtlas.class);
+			GM.bgAtlas = GM.assetManager.get(Main.BACKGROUND_ATLAS_PATH + "egypt.atlas", TextureAtlas.class);
+
 			ScreenManager.getInstance().show(Screens.GAME);
 		}
 		super.render(delta);
@@ -34,12 +33,14 @@ public class LoadingScreen extends MenuScreen{
 
 	@Override
 	public void show() {
+		finishLoading = false;
 		RubeSceneLoader loader = new RubeSceneLoader();
-		GM.scene = loader.loadScene(Gdx.files.internal("scenes/" + GM.sceneFile));
-		GM.assetManager.load("scenes/scene1.atlas", TextureAtlas.class);
-		//GM.assetManager.load("scenes/" + GM.sceneFile, RubeScene.class);
-		GM.assetManager.load("bow.atlas", TextureAtlas.class);
-		GM.assetManager.load("backgrounds/egypt.atlas", TextureAtlas.class);
+		GM.scene = loader.loadScene(Gdx.files.internal(Main.SCENES_PATH + GM.sceneFile));
+		GM.assetManager.load(Main.SCENES_ATLAS_PATH + "scene1.atlas", TextureAtlas.class);
+		GM.assetManager.load(Main.COMMON_ATLAS_PATH, TextureAtlas.class);
+		GM.assetManager.load(Main.BACKGROUND_ATLAS_PATH + "egypt.atlas", TextureAtlas.class);
+		GM.assetManager.load("chicken/skeleton.atlas", TextureAtlas.class);
+		GM.assetManager.load("chicken/bow.atlas", TextureAtlas.class);
 		super.show();
 	}
 
@@ -69,7 +70,7 @@ public class LoadingScreen extends MenuScreen{
 
 	@Override
 	protected void onBack() {
-		
+
 	}
 
 }

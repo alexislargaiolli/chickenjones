@@ -3,270 +3,221 @@ scene1.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ball
+sand
   rotate: false
-  xy: 1, 746
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-blade
-  rotate: false
-  xy: 1, 488
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-T9
-  rotate: false
-  xy: 1, 21
-  size: 80, 465
-  orig: 80, 465
-  offset: 0, 0
-  index: -1
-TD9
-  rotate: false
-  xy: 83, 21
-  size: 80, 465
-  orig: 80, 465
+  xy: 1, 743
+  size: 935, 280
+  orig: 935, 280
   offset: 0, 0
   index: -1
 TD211
   rotate: false
-  xy: 165, 406
+  xy: 1, 661
   size: 465, 80
   orig: 465, 80
   offset: 0, 0
   index: -1
 TD11
   rotate: false
-  xy: 165, 324
+  xy: 1, 579
   size: 465, 80
   orig: 465, 80
   offset: 0, 0
   index: -1
 T11
   rotate: false
-  xy: 165, 242
+  xy: 468, 661
   size: 465, 80
   orig: 465, 80
   offset: 0, 0
   index: -1
-TD2
+T9
   rotate: false
-  xy: 165, 83
-  size: 234, 157
-  orig: 234, 157
+  xy: 1, 112
+  size: 80, 465
+  orig: 80, 465
   offset: 0, 0
   index: -1
-T10
+TD9
   rotate: false
-  xy: 165, 1
-  size: 234, 80
-  orig: 234, 80
+  xy: 83, 112
+  size: 80, 465
+  orig: 80, 465
   offset: 0, 0
   index: -1
-T2
+ball
   rotate: false
-  xy: 401, 83
-  size: 234, 157
-  orig: 234, 157
+  xy: 165, 321
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
-TD10
+blade
   rotate: false
-  xy: 401, 1
-  size: 234, 80
-  orig: 234, 80
-  offset: 0, 0
-  index: -1
-wood-spike-block
-  rotate: false
-  xy: 632, 874
-  size: 256, 128
-  orig: 256, 128
-  offset: 0, 0
-  index: -1
-T8
-  rotate: false
-  xy: 890, 768
-  size: 80, 234
-  orig: 80, 234
+  xy: 165, 63
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 rope-chain
   rotate: false
-  xy: 972, 490
+  xy: 423, 65
   size: 32, 512
   orig: 32, 512
-  offset: 0, 0
-  index: -1
-metal-spike-block
-  rotate: false
-  xy: 632, 360
-  size: 256, 128
-  orig: 256, 128
-  offset: 0, 0
-  index: -1
-T1
-  rotate: false
-  xy: 632, 246
-  size: 224, 112
-  orig: 224, 112
-  offset: 0, 0
-  index: -1
-T6
-  rotate: false
-  xy: 858, 200
-  size: 159, 158
-  orig: 159, 158
-  offset: 0, 0
-  index: -1
-chicken
-  rotate: false
-  xy: 890, 373
-  size: 128, 115
-  orig: 128, 115
-  offset: 0, 0
-  index: -1
-TD6
-  rotate: false
-  xy: 637, 86
-  size: 158, 158
-  orig: 158, 158
-  offset: 0, 0
-  index: -1
-coin
-  rotate: false
-  xy: 797, 204
-  size: 40, 40
-  orig: 40, 40
-  offset: 0, 0
-  index: -1
-TD210
-  rotate: false
-  xy: 637, 4
-  size: 234, 80
-  orig: 234, 80
-  offset: 0, 0
-  index: -1
-TD1
-  rotate: false
-  xy: 797, 86
-  size: 223, 112
-  orig: 223, 112
-  offset: 0, 0
-  index: -1
-block11
-  rotate: false
-  xy: 873, 23
-  size: 120, 61
-  orig: 120, 61
-  offset: 0, 0
-  index: -1
-TD5
-  rotate: false
-  xy: 259, 844
-  size: 158, 158
-  orig: 158, 158
-  offset: 0, 0
-  index: -1
-T5
-  rotate: false
-  xy: 419, 844
-  size: 158, 158
-  orig: 158, 158
   offset: 0, 0
   index: -1
 metal-chain
   rotate: false
-  xy: 579, 490
+  xy: 457, 65
   size: 32, 512
   orig: 32, 512
   offset: 0, 0
   index: -1
-T4
+block32
   rotate: false
-  xy: 613, 609
-  size: 157, 157
-  orig: 157, 157
+  xy: 1, 1
+  size: 240, 60
+  orig: 240, 60
   offset: 0, 0
   index: -1
-wood-spikes
+T10
   rotate: false
-  xy: 613, 808
-  size: 256, 64
-  orig: 256, 64
+  xy: 468, 579
+  size: 234, 80
+  orig: 234, 80
   offset: 0, 0
   index: -1
-TD8
+TD2
   rotate: false
-  xy: 772, 572
+  xy: 491, 420
+  size: 234, 157
+  orig: 234, 157
+  offset: 0, 0
+  index: -1
+T2
+  rotate: false
+  xy: 491, 261
+  size: 234, 157
+  orig: 234, 157
+  offset: 0, 0
+  index: -1
+wood-spike-block
+  rotate: false
+  xy: 491, 131
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+metal-spike-block
+  rotate: false
+  xy: 491, 1
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+TD10
+  rotate: false
+  xy: 704, 579
+  size: 234, 80
+  orig: 234, 80
+  offset: 0, 0
+  index: -1
+T1
+  rotate: false
+  xy: 727, 465
+  size: 224, 112
+  orig: 224, 112
+  offset: 0, 0
+  index: -1
+TD1
+  rotate: false
+  xy: 727, 351
+  size: 223, 112
+  orig: 223, 112
+  offset: 0, 0
+  index: -1
+T8
+  rotate: false
+  xy: 938, 789
   size: 80, 234
   orig: 80, 234
   offset: 0, 0
   index: -1
+TD210
+  rotate: false
+  xy: 727, 269
+  size: 234, 80
+  orig: 234, 80
+  offset: 0, 0
+  index: -1
+T6
+  rotate: false
+  xy: 749, 109
+  size: 159, 158
+  orig: 159, 158
+  offset: 0, 0
+  index: -1
 block13
   rotate: false
-  xy: 613, 547
+  xy: 243, 1
   size: 120, 60
   orig: 120, 60
   offset: 0, 0
   index: -1
 could1
   rotate: false
-  xy: 735, 495
+  xy: 749, 32
   size: 187, 75
   orig: 187, 75
   offset: 0, 0
   index: -1
-could2
+rope2
   rotate: false
-  xy: 613, 493
-  size: 98, 52
-  orig: 98, 52
-  offset: 0, 0
-  index: -1
-metal-spike
-  rotate: false
-  xy: 854, 638
-  size: 64, 128
-  orig: 64, 128
+  xy: 910, 113
+  size: 29, 154
+  orig: 29, 154
   offset: 0, 0
   index: -1
 block21
   rotate: false
-  xy: 854, 576
+  xy: 365, 1
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: -1
-T27
+TD8
   rotate: false
-  xy: 259, 685
-  size: 157, 157
-  orig: 157, 157
+  xy: 941, 33
+  size: 80, 234
+  orig: 80, 234
   offset: 0, 0
   index: -1
-T7
+rope
   rotate: false
-  xy: 418, 685
-  size: 157, 157
-  orig: 157, 157
+  xy: 427, 3
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: -1
-TD3
+coin
   rotate: false
-  xy: 259, 526
-  size: 157, 157
-  orig: 157, 157
+  xy: 1, 70
+  size: 40, 40
+  orig: 40, 40
   offset: 0, 0
   index: -1
-TD4
+metal-spike
   rotate: false
-  xy: 418, 526
-  size: 157, 157
-  orig: 157, 157
+  xy: 940, 659
+  size: 64, 128
+  orig: 64, 128
+  offset: 0, 0
+  index: -1
+wood-spike
+  rotate: false
+  xy: 953, 529
+  size: 64, 128
+  orig: 64, 128
   offset: 0, 0
   index: -1
 
@@ -274,52 +225,129 @@ scene12.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+wood-spikes
+  rotate: false
+  xy: 1, 441
+  size: 256, 64
+  orig: 256, 64
+  offset: 0, 0
+  index: -1
+metal-spikes
+  rotate: false
+  xy: 1, 375
+  size: 256, 64
+  orig: 256, 64
+  offset: 0, 0
+  index: -1
+TD6
+  rotate: false
+  xy: 1, 215
+  size: 158, 158
+  orig: 158, 158
+  offset: 0, 0
+  index: -1
+TD5
+  rotate: false
+  xy: 1, 55
+  size: 158, 158
+  orig: 158, 158
+  offset: 0, 0
+  index: -1
+block33
+  rotate: false
+  xy: 259, 443
+  size: 240, 62
+  orig: 240, 62
+  offset: 0, 0
+  index: -1
+block31
+  rotate: false
+  xy: 501, 444
+  size: 241, 61
+  orig: 241, 61
+  offset: 0, 0
+  index: -1
+T5
+  rotate: false
+  xy: 161, 215
+  size: 158, 158
+  orig: 158, 158
+  offset: 0, 0
+  index: -1
+T4
+  rotate: false
+  xy: 161, 56
+  size: 157, 157
+  orig: 157, 157
+  offset: 0, 0
+  index: -1
+T27
+  rotate: false
+  xy: 321, 284
+  size: 157, 157
+  orig: 157, 157
+  offset: 0, 0
+  index: -1
+T7
+  rotate: false
+  xy: 321, 125
+  size: 157, 157
+  orig: 157, 157
+  offset: 0, 0
+  index: -1
+TD3
+  rotate: false
+  xy: 744, 348
+  size: 157, 157
+  orig: 157, 157
+  offset: 0, 0
+  index: -1
+block11
+  rotate: false
+  xy: 903, 444
+  size: 120, 61
+  orig: 120, 61
+  offset: 0, 0
+  index: -1
+chicken
+  rotate: false
+  xy: 320, 8
+  size: 128, 115
+  orig: 128, 115
+  offset: 0, 0
+  index: -1
+TD4
+  rotate: false
+  xy: 480, 284
+  size: 157, 157
+  orig: 157, 157
+  offset: 0, 0
+  index: -1
 TD7
   rotate: false
-  xy: 1, 1
+  xy: 480, 125
   size: 157, 157
   orig: 157, 157
   offset: 0, 0
   index: -1
 T3
   rotate: false
-  xy: 160, 1
+  xy: 639, 189
   size: 157, 157
   orig: 157, 157
   offset: 0, 0
   index: -1
-metal-spikes
+rope1
   rotate: false
-  xy: 319, 94
-  size: 256, 64
-  orig: 256, 64
+  xy: 798, 192
+  size: 128, 154
+  orig: 128, 154
   offset: 0, 0
   index: -1
-block33
+could2
   rotate: false
-  xy: 577, 96
-  size: 240, 62
-  orig: 240, 62
-  offset: 0, 0
-  index: -1
-wood-spike
-  rotate: false
-  xy: 819, 30
-  size: 64, 128
-  orig: 64, 128
-  offset: 0, 0
-  index: -1
-block32
-  rotate: false
-  xy: 577, 34
-  size: 240, 60
-  orig: 240, 60
-  offset: 0, 0
-  index: -1
-block31
-  rotate: false
-  xy: 319, 31
-  size: 241, 61
-  orig: 241, 61
+  xy: 1, 1
+  size: 98, 52
+  orig: 98, 52
   offset: 0, 0
   index: -1

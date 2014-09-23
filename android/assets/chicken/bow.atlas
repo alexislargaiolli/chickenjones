@@ -1,0 +1,41 @@
+
+bow.png
+size: 763,126
+format: RGBA8888
+filter: MipMapNearestLinear,Linear
+repeat: none
+botstring
+  rotate: false
+  xy: 542, 26
+  size: 191, 100
+  orig: 191, 100
+  offset: 0, 0
+  index: -1
+bow
+  rotate: true
+  xy: 2, 14
+  size: 112, 324
+  orig: 112, 324
+  offset: 0, 0
+  index: -1
+lefthand
+  rotate: false
+  xy: 735, 96
+  size: 28, 30
+  orig: 28, 30
+  offset: 0, 0
+  index: -1
+righthand
+  rotate: false
+  xy: 735, 64
+  size: 28, 30
+  orig: 28, 30
+  offset: 0, 0
+  index: -1
+topstring
+  rotate: true
+  xy: 328, 2
+  size: 124, 212
+  orig: 124, 212
+  offset: 0, 0
+  index: -1

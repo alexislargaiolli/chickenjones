@@ -11,7 +11,8 @@ public class Item {
 	private int gold;
 	private String icon;
 	private ArrayList<PassiveSkill> passives = new ArrayList<PassiveSkill>();
-
+	private ArrayList<ActiveSkill> actives = new ArrayList<ActiveSkill>();
+	
 	public boolean isBuyable(){
 		return gold <= PlayerManager.get().getGold();
 	}
@@ -62,6 +63,14 @@ public class Item {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public ArrayList<ActiveSkill> getActives() {
+		return actives;
+	}
+
+	public void setActives(ArrayList<ActiveSkill> actives) {
+		this.actives = actives;
 	}
 
 }

@@ -3,7 +3,9 @@ package fr.alex.games.items;
 import fr.alex.games.localization.LocalManager;
 
 public enum Caracteristic {
-	BOW_STRENGTH("bow.strength.title", "bow.strength.desc"), JUMP_STRENGTH("jump.strength.title", "jump.strength.desc");
+	BOW_STRENGTH("bow.strength.title", "bow.strength.desc"),
+	SPEED("chicken.speed.title", "chicken.speed.desc"), 
+	TIME_SPEED("time.speed.title", "time.speed.desc");
 
 	private String name;
 	private String description;

@@ -6,18 +6,29 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
+import fr.alex.games.GM;
 
 public class Arrow extends SimpleSpatial {
 	boolean dead;
 	boolean dieing;
+	Vector2 size;
 	float timeBeforeDeath = -1;
 	PooledEffect effect;
+	int contactCount = 0;
+	int maxContact = 1;
 
 	public Arrow(Body body, float rotationInDegrees, Vector2 size, Vector2 center, TextureRegion region, PooledEffect effect) {
 		super(region, false, body, Color.WHITE, size, center, rotationInDegrees);
+		mSprite.setSize(size.x * 1.2f, size.y);
 		this.effect = effect;
 		dieing = false;
 		dead = false;
+		this.size = size;
 	}
 
 	public void render(SpriteBatch batch, float delta) {
@@ -31,6 +42,34 @@ public class Arrow extends SimpleSpatial {
 			// effect.setPosition(getWorldX(), getWorldY());
 		}
 		super.render(batch, delta);
+	}
+
+	public Vector2 getHead() {
+		return mBody.getWorldPoint(new Vector2(size.x * .5f, 0));
+	}
+
+	public Vector2 getTail() {
+		return mBody.getWorldPoint(new Vector2(size.x * -.5f, 0));
+	}
+
+	public static Body createBody(float x, float y, float width, float height) {
+		PolygonShape shape = new PolygonShape();
+		shape.set(new float[] { width * -.5f, 0, width * .25f, height * .5f, width * .5f, 0, width * .25f, -height * .5f });
+
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.DynamicBody;
+		bodyDef.position.set(x, y);
+		bodyDef.allowSleep = false;
+		bodyDef.gravityScale = 1f;
+		Body body = GM.world.createBody(bodyDef);
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixtureDef.density = 1f;
+		fixtureDef.restitution = .5f;
+		fixtureDef.friction = .5f;
+		body.createFixture(fixtureDef);
+		return body;
 	}
 
 	public PooledEffect getEffect() {
@@ -48,12 +87,36 @@ public class Arrow extends SimpleSpatial {
 		}
 	}
 
+	public void contact() {
+		contactCount++;
+	}
+
+	public boolean maxContactReached() {
+		return contactCount == maxContact;
+	}
+
 	public boolean isDead() {
 		return dead;
 	}
 
 	public void setDead(boolean dead) {
 		this.dead = dead;
+	}
+
+	public int getContactCount() {
+		return contactCount;
+	}
+
+	public void setContactCount(int contactCount) {
+		this.contactCount = contactCount;
+	}
+
+	public int getMaxContact() {
+		return maxContact;
+	}
+
+	public void setMaxContact(int maxContact) {
+		this.maxContact = maxContact;
 	}
 
 }
