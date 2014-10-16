@@ -5,28 +5,35 @@ filter: Linear,Linear
 repeat: none
 arrow
   rotate: false
-  xy: 1, 78
+  xy: 1, 102
   size: 300, 38
   orig: 300, 38
   offset: 0, 0
   index: -1
+coin
+  rotate: false
+  xy: 1, 5
+  size: 95, 95
+  orig: 95, 95
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 98, 8
+  size: 96, 92
+  orig: 96, 92
+  offset: 0, 0
+  index: -1
 chicken
   rotate: false
-  xy: 303, 1
+  xy: 303, 25
   size: 128, 115
   orig: 128, 115
   offset: 0, 0
   index: -1
-coin
-  rotate: false
-  xy: 1, 36
-  size: 40, 40
-  orig: 40, 40
-  offset: 0, 0
-  index: -1
 trajectory
   rotate: false
-  xy: 433, 111
+  xy: 98, 1
   size: 5, 5
   orig: 5, 5
   offset: 0, 0

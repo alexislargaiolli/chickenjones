@@ -3,6 +3,7 @@ package fr.alex.games;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,7 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 import fr.alex.games.items.ActiveSkill;
@@ -27,6 +30,7 @@ import fr.alex.games.screens.ScreenManager;
 import fr.alex.games.screens.Screens;
 
 public class HUD {
+	protected static final int VIRTUAL_WIDTH = 1280, VIRTUAL_HEIGHT = 720;
 
 	protected Stage stage;
 	protected Table mainTable;
@@ -35,6 +39,7 @@ public class HUD {
 	// In game elements
 	private Label lbInfo;
 	private Label scoreLabel;
+	private Label arrowLabel;
 	private ImageButton fireButton;
 	private TextButton btResume;
 	private TextButton btRestart;
@@ -54,10 +59,10 @@ public class HUD {
 
 	public HUD(final GameScreen game) {
 		this.game = game;
-		stage = new Stage(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		stage = new Stage(new ExtendViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT));
 		mask = new Image(GM.skin.getDrawable("black"));
 		mask.setZIndex(50);
-		mask.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		mask.setSize(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		mask.addAction(Actions.sequence(Actions.alpha(0, 0)));
 
 		mainTable = new Table(GM.skin);
@@ -65,7 +70,11 @@ public class HUD {
 
 		scoreLabel = new Label("" + GM.gold, GM.skin, "gold");
 		scoreLabel.setAlignment(0);
-		mainTable.add(scoreLabel).width(150).pad(10).left().expandX();
+		
+		arrowLabel = new Label("" + GM.arrowCount, GM.skin);
+		
+		mainTable.add(scoreLabel).width(150).pad(10).left();
+		mainTable.add(arrowLabel).pad(10).left();
 		mainTable.row().expand();
 
 		lbInfo = new Label("", GM.skin);
@@ -73,39 +82,34 @@ public class HUD {
 
 		mainTable.row();
 
-		for (Item item : ItemManager.get().getPlayerItem()) {
+		Table btGroup = new Table();
+
+		for (Item item : ItemManager.get().getEquiped()) {
 			for (final ActiveSkill skill : item.getActives()) {
-				// final ImageButton imgBt = new ImageButton(imageUp)
-				final TextButton bt = new TextButton("skil", GM.skin);
+				SpriteDrawable bg = new SpriteDrawable(GM.itemsAtlas.createSprite(item.getId() + ""));
+				TextButtonStyle style = new TextButtonStyle(bg, bg, bg, GM.skin.getFont("default-font"));
+				final TextButton bt = new TextButton("", style);
+
 				bt.setName(getUiSkillKey(skill));
 
 				bt.addListener(new ClickListener() {
 					@Override
 					public void clicked(InputEvent event, float x, float y) {
 						if (!bt.isDisabled()) {
-							System.out.println("clicked");
 							game.activeSkill(true, skill);
+							bt.getColor().set(Color.GRAY);
+							bt.addAction(Actions.repeat(5, Actions.sequence(Actions.alpha(.5f, .5f), Actions.alpha(1f, .5f))));
 							bt.setDisabled(true);
 						}
 						super.clicked(event, x, y);
 					}
 				});
-				// mainTable.add(bt).left().size(80, 80).pad(10).expandX();
+				btGroup.add(bt).size(70, 70).bottom().padRight(5);
 			}
 		}
-
-		fireButton = new ImageButton(GM.skin.getDrawable("bt-fire"), GM.skin.getDrawable("bt-fire"));
-
-		fireButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				game.fire();
-				super.clicked(event, x, y);
-			}
-		});
-		float size = Gdx.graphics.getWidth() * .2f;
-		mainTable.add(fireButton).right().size(size, size).padRight(10).padBottom(10);
-
+		
+		mainTable.debugTable();
+		mainTable.add(btGroup).right().bottom().pad(30);
 		stage.addActor(mask);
 		stage.addActor(mainTable);
 
@@ -258,9 +262,16 @@ public class HUD {
 		mask.addAction(Actions.sequence(Actions.alpha(0, duration)));
 	}
 
+	public void updateReloadingSkill(ActiveSkill skill, int time) {
+		TextButton bt = mainTable.findActor(getUiSkillKey(skill));
+		bt.setText(time + "");
+	}
+
 	public void skillReloaded(ActiveSkill skill) {
 		TextButton bt = mainTable.findActor(getUiSkillKey(skill));
 		bt.setDisabled(false);
+		bt.getColor().set(Color.WHITE);
+		bt.setText("");
 	}
 
 	public String getUiSkillKey(ActiveSkill skill) {
@@ -269,6 +280,7 @@ public class HUD {
 
 	public void update(float delta) {
 		scoreLabel.setText(" " + GM.gold);
+		arrowLabel.setText("" + GM.arrowCount);
 		stage.act(delta);
 
 		if (game.getState() == State.WIN) {

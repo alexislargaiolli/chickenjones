@@ -24,7 +24,7 @@ public class LoadingScreen extends MenuScreen {
 		}
 		if (Gdx.input.justTouched() && finishLoading) {
 			GM.commonAtlas = GM.assetManager.get(Main.COMMON_ATLAS_PATH, TextureAtlas.class);
-			GM.bgAtlas = GM.assetManager.get(Main.BACKGROUND_ATLAS_PATH + "egypt.atlas", TextureAtlas.class);
+			GM.bgAtlas = GM.assetManager.get(Main.BACKGROUND_ATLAS_PATH + GM.level.getBackgroundFile(), TextureAtlas.class);
 
 			ScreenManager.getInstance().show(Screens.GAME);
 		}
@@ -35,10 +35,10 @@ public class LoadingScreen extends MenuScreen {
 	public void show() {
 		finishLoading = false;
 		RubeSceneLoader loader = new RubeSceneLoader();
-		GM.scene = loader.loadScene(Gdx.files.internal(Main.SCENES_PATH + GM.sceneFile));
-		GM.assetManager.load(Main.SCENES_ATLAS_PATH + "scene1.atlas", TextureAtlas.class);
+		GM.scene = loader.loadScene(Gdx.files.internal(Main.SCENES_PATH + GM.level.getSceneFile()));
+		GM.assetManager.load(Main.SCENES_ATLAS_PATH + GM.level.getSceneAtlasFile(), TextureAtlas.class);
 		GM.assetManager.load(Main.COMMON_ATLAS_PATH, TextureAtlas.class);
-		GM.assetManager.load(Main.BACKGROUND_ATLAS_PATH + "egypt.atlas", TextureAtlas.class);
+		GM.assetManager.load(Main.BACKGROUND_ATLAS_PATH + GM.level.getBackgroundFile(), TextureAtlas.class);
 		GM.assetManager.load("chicken/skeleton.atlas", TextureAtlas.class);
 		GM.assetManager.load("chicken/bow.atlas", TextureAtlas.class);
 		super.show();

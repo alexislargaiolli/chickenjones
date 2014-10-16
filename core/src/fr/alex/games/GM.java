@@ -11,12 +11,15 @@ public class GM {
 	public static World world;
 	public static Skin skin;
 	public static int gold;
+	public static int stars;
 	public static TextureAtlas commonAtlas;
+	public static TextureAtlas itemsAtlas;
 	public static TextureAtlas bgAtlas;
-	public static String sceneFile;
-	public static int sceneIndex;
+	public static Level level;
 	public static RubeScene scene;
 	public static float ratio;
 	public static int arrowFiredCount;
 	public static int hitCount;
+	public static int maxArrowCount;
+	public static int arrowCount;
 }

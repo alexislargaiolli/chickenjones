@@ -5,268 +5,225 @@ filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 1, 838
+  xy: 1, 518
   size: 1920, 1080
   orig: 1920, 1080
   offset: 0, 0
   index: -1
+lvl-3
+  rotate: false
+  xy: 1923, 1476
+  size: 105, 122
+  orig: 105, 122
+  offset: 0, 0
+  index: -1
+lvl-2
+  rotate: false
+  xy: 1923, 1352
+  size: 105, 122
+  orig: 105, 122
+  offset: 0, 0
+  index: -1
+lvl-lock
+  rotate: false
+  xy: 1923, 1229
+  size: 105, 121
+  orig: 105, 121
+  offset: 0, 0
+  index: -1
+lvl-0
+  rotate: false
+  xy: 1923, 1106
+  size: 105, 121
+  orig: 105, 121
+  offset: 0, 0
+  index: -1
+lvl-1
+  rotate: false
+  xy: 1923, 983
+  size: 105, 121
+  orig: 105, 121
+  offset: 0, 0
+  index: -1
 Help
   rotate: false
-  xy: 1923, 1823
+  xy: 1923, 886
   size: 90, 95
   orig: 90, 95
   offset: 0, 0
   index: -1
-Vol-Up
+scroll-bt
   rotate: false
-  xy: 1923, 1731
-  size: 90, 90
-  orig: 90, 90
+  xy: 2015, 958
+  size: 12, 23
+  orig: 12, 23
   offset: 0, 0
   index: -1
-Cancel
+Vol-Up
   rotate: false
-  xy: 1923, 1639
+  xy: 1923, 794
   size: 90, 90
   orig: 90, 90
   offset: 0, 0
   index: -1
 Vol-Down
   rotate: false
-  xy: 1923, 1547
+  xy: 1923, 702
   size: 90, 90
   orig: 90, 90
   offset: 0, 0
   index: -1
 Vol-Mute
   rotate: false
-  xy: 1923, 1455
+  xy: 1923, 610
   size: 90, 90
   orig: 90, 90
   offset: 0, 0
   index: -1
 Forward
   rotate: false
-  xy: 1923, 1363
+  xy: 1923, 518
   size: 90, 90
   orig: 90, 90
   offset: 0, 0
   index: -1
+panel
+  rotate: false
+  xy: 1, 39
+  size: 578, 477
+  orig: 578, 477
+  offset: 0, 0
+  index: -1
+Slider
+  rotate: false
+  xy: 1, 16
+  size: 664, 21
+  orig: 664, 21
+  offset: 0, 0
+  index: -1
+black
+  rotate: false
+  xy: 1, 1
+  size: 20, 13
+  orig: 20, 13
+  offset: 0, 0
+  index: -1
+scroll
+  rotate: false
+  xy: 581, 75
+  size: 42, 441
+  orig: 42, 441
+  offset: 0, 0
+  index: -1
+Large-Box-Blue
+  rotate: false
+  xy: 625, 99
+  size: 438, 417
+  orig: 438, 417
+  offset: 0, 0
+  index: -1
 Menu
   rotate: false
-  xy: 1923, 1271
+  xy: 667, 7
   size: 90, 90
   orig: 90, 90
   offset: 0, 0
   index: -1
 Settings
   rotate: false
-  xy: 1923, 1179
+  xy: 759, 7
   size: 90, 90
   orig: 90, 90
   offset: 0, 0
   index: -1
 Pause
   rotate: false
-  xy: 1923, 1087
+  xy: 851, 7
   size: 90, 90
   orig: 90, 90
   offset: 0, 0
   index: -1
 Stop
   rotate: false
-  xy: 1923, 995
+  xy: 943, 7
   size: 90, 90
   orig: 90, 90
   offset: 0, 0
   index: -1
 Reset
   rotate: false
-  xy: 1923, 903
+  xy: 1035, 7
   size: 90, 90
   orig: 90, 90
-  offset: 0, 0
-  index: -1
-Back
-  rotate: false
-  xy: 1923, 811
-  size: 90, 90
-  orig: 90, 90
-  offset: 0, 0
-  index: -1
-World-Unlocked
-  rotate: false
-  xy: 1, 263
-  size: 440, 573
-  orig: 440, 573
-  offset: 0, 0
-  index: -1
-World-Locked
-  rotate: false
-  xy: 443, 263
-  size: 440, 573
-  orig: 440, 573
-  offset: 0, 0
-  index: -1
-Large-Box-Blue
-  rotate: false
-  xy: 885, 419
-  size: 438, 417
-  orig: 438, 417
   offset: 0, 0
   index: -1
 Large-Box-Red
   rotate: false
-  xy: 1325, 392
+  xy: 1065, 99
   size: 438, 417
   orig: 438, 417
   offset: 0, 0
   index: -1
-Medium-Box-Blue
+Back
   rotate: false
-  xy: 885, 91
-  size: 438, 326
-  orig: 438, 326
-  offset: 0, 0
-  index: -1
-black
-  rotate: false
-  xy: 1325, 823
-  size: 20, 13
-  orig: 20, 13
-  offset: 0, 0
-  index: -1
-direction-arrow
-  rotate: false
-  xy: 1347, 828
-  size: 123, 8
-  orig: 123, 8
-  offset: 0, 0
-  index: -1
-dirction-wheel
-  rotate: false
-  xy: 1325, 80
-  size: 310, 310
-  orig: 310, 310
-  offset: 0, 0
-  index: -1
-Large-Button-Red
-  rotate: false
-  xy: 1637, 313
-  size: 336, 77
-  orig: 336, 77
-  offset: 0, 0
-  index: -1
-Large-Button-Blue
-  rotate: false
-  xy: 1637, 234
-  size: 336, 77
-  orig: 336, 77
-  offset: 0, 0
-  index: -1
-Level-Locked
-  rotate: false
-  xy: 1637, 38
-  size: 194, 194
-  orig: 194, 194
-  offset: 0, 0
-  index: -1
-Small-Button-Red
-  rotate: false
-  xy: 1765, 732
-  size: 245, 77
-  orig: 245, 77
-  offset: 0, 0
-  index: -1
-Small-Button-Blue
-  rotate: false
-  xy: 1765, 653
-  size: 245, 77
-  orig: 245, 77
-  offset: 0, 0
-  index: -1
-Level-2-Star
-  rotate: false
-  xy: 1765, 400
-  size: 194, 251
-  orig: 194, 251
-  offset: 0, 0
-  index: -1
-Level-3-Star
-  rotate: false
-  xy: 1, 10
-  size: 194, 251
-  orig: 194, 251
-  offset: 0, 0
-  index: -1
-Level-Unlocked
-  rotate: false
-  xy: 197, 10
-  size: 194, 251
-  orig: 194, 251
-  offset: 0, 0
-  index: -1
-Level-1-Star
-  rotate: false
-  xy: 393, 10
-  size: 194, 251
-  orig: 194, 251
-  offset: 0, 0
-  index: -1
-Slider
-  rotate: false
-  xy: 589, 68
-  size: 664, 21
-  orig: 664, 21
+  xy: 1127, 7
+  size: 90, 90
+  orig: 90, 90
   offset: 0, 0
   index: -1
 Slider-Button
   rotate: false
-  xy: 1255, 1
+  xy: 1219, 9
   size: 59, 88
   orig: 59, 88
   offset: 0, 0
   index: -1
-bt-fire
+bt
   rotate: false
-  xy: 1833, 132
-  size: 101, 100
-  orig: 101, 100
+  xy: 1280, 13
+  size: 214, 84
+  orig: 214, 84
   offset: 0, 0
   index: -1
-Padlock
+bt-clicked
   rotate: false
-  xy: 589, 113
-  size: 96, 148
-  orig: 96, 148
+  xy: 1496, 16
+  size: 211, 81
+  orig: 211, 81
+  offset: 0, 0
+  index: -1
+Medium-Box-Blue
+  rotate: false
+  xy: 1505, 190
+  size: 438, 326
+  orig: 438, 326
+  offset: 0, 0
+  index: -1
+bt-cancel
+  rotate: false
+  xy: 1945, 447
+  size: 71, 69
+  orig: 71, 69
+  offset: 0, 0
+  index: -1
+bt-buy
+  rotate: false
+  xy: 1945, 376
+  size: 71, 69
+  orig: 71, 69
   offset: 0, 0
   index: -1
 gold-label
   rotate: false
-  xy: 687, 196
+  xy: 1505, 123
   size: 192, 65
   orig: 192, 65
   offset: 0, 0
   index: -1
-direction-bt
+bt-fire
   rotate: false
-  xy: 1833, 70
-  size: 60, 60
-  orig: 60, 60
-  offset: 0, 0
-  index: -1
-white
-  rotate: false
-  xy: 0, 100
-  size: 1, 1
-  orig: 1, 1
-  offset: 0, 0
-  index: -1
-default-scroll
-  rotate: false
-  xy: 700, 300
-  size: 20, 20
-  split: 2, 2, 2, 2
-  orig: 20, 20
+  xy: 1709, 38
+  size: 150, 150
+  orig: 150, 150
   offset: 0, 0
   index: -1

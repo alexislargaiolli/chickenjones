@@ -12,7 +12,7 @@ import fr.alex.games.GM;
 
 public abstract class MenuScreen implements Screen{
 	
-	protected static final int VIRTUAL_WIDTH = 800, VIRTUAL_HEIGHT = 400;
+	protected static int VIRTUAL_WIDTH = 1280, VIRTUAL_HEIGHT = 720;
 	protected Stage stage;
 	protected Table mainTable;
 	
@@ -39,7 +39,7 @@ public abstract class MenuScreen implements Screen{
 		stage.act(delta);
 		stage.draw();
 		//Table.drawDebug(stage);
-		if(Gdx.input.isKeyPressed(Keys.BACK)){			
+		if(Gdx.input.isKeyPressed(Keys.BACK) || Gdx.input.isKeyPressed(Keys.SPACE)){			
 			onBack();
 		}
 	}

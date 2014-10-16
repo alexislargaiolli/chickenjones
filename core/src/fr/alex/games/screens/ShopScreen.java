@@ -3,14 +3,16 @@ package fr.alex.games.screens;
 import java.util.List;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import fr.alex.games.GM;
@@ -18,19 +20,9 @@ import fr.alex.games.items.Item;
 import fr.alex.games.items.ItemManager;
 import fr.alex.games.localization.LocalManager;
 import fr.alex.games.saves.PlayerManager;
-import fr.alex.games.widget.CustomList;
-import fr.alex.games.widget.CustomListItem;
-import fr.alex.games.widget.ItemSelectedEvent;
 
 public class ShopScreen extends MenuScreen {
-	private Label playerGold;
-	private Table selectedItemTable;
-	private Image iconSelected;
-	private Label selectedName;
-	private Label selectedDesc;
-	private Label selectedGold;
-	private TextButton btBuy;
-	private Item selected;
+	private Label playerGold;	
 
 	public ShopScreen() {
 		super();
@@ -59,107 +51,64 @@ public class ShopScreen extends MenuScreen {
 
 	@Override
 	protected void init() {
-		
-		
 		mainTable.add("Item Shop", "title").expandX();
 		mainTable.row();
 		playerGold = new Label("Gold: " + PlayerManager.get().getGold(), GM.skin);
 		mainTable.add(playerGold);
 		mainTable.row();
+		
+		
 		Table t = new Table(GM.skin);
+		
 		t.debug();
-		List<Item> items = ItemManager.get().getShopItem();
+		t.pad(40).defaults().expandX().space(4);
+		List<Item> items = ItemManager.get().getItems();
+		List<Item> playerItems = ItemManager.get().getPlayerItem();
 		for (final Item item : items) {
 			
 			Image icon = new Image(GM.skin.getRegion("Help"));
 			t.add(icon).padTop(10);
-			VerticalGroup v = new VerticalGroup();				
-			v.addActor(new Label(item.getName(), GM.skin, "title"));
-			v.addActor(new Label(item.getDesc(), GM.skin));
-			t.add(v).padTop(10);
-			t.row();
-			t.add("Prix: " + item.getGold());
-			final TextButton bt = new TextButton("ACHETER", GM.skin);
-			t.add(bt).right();
-			bt.addListener(new ClickListener(){
+			VerticalGroup v = new VerticalGroup();			
+			v.align(Align.left);
+			v.addActor(new Label(item.getName(), GM.skin));
+			v.addActor(new Label(item.getDesc(), GM.skin, "small"));
+			t.add(v).padTop(10).left();
+			t.row().colspan(2);
+			
+			HorizontalGroup v2 = new HorizontalGroup();	
+			v2.addActor(new Label("Prix: " + item.getGold(), GM.skin,  "small"));
+			final Button bt = new Button(GM.skin, "buy");
+			if(playerItems.contains(item)){
+				bt.addAction(Actions.alpha(0.5f, 0));
+			}
+			else{
+				bt.addListener(new ClickListener(){
 
-				@Override
-				public void clicked(InputEvent event, float x, float y) {
-					if (ItemManager.get().buyItem(item)) {
-						selectedItemTable.setVisible(false);
-						playerGold.setText("Gold: " + PlayerManager.get().getGold());
-						bt.setVisible(false);
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						if (ItemManager.get().buyItem(item)) {
+							playerGold.setText("Gold: " + PlayerManager.get().getGold());
+							
+							String text = LocalManager.get().getHUDString("shop.selected.alreadybuy");							
+							bt.addAction(Actions.alpha(0.5f, 1f));
+						}
+						super.clicked(event, x, y);
 					}
-					super.clicked(event, x, y);
-				}
-				
-			});
+					
+				});
+			}
+			v2.addActor(bt);
+			t.add(v2).right();
+			
 			t.row();
 		}
-		
-		ScrollPane container = new ScrollPane(t, GM.skin);
-		
-		mainTable.add(container).fill(true).pad(10);
-		mainTable.debug();
-		
-		/*final CustomList l = new CustomList(GM.skin);
-		l.setItems(ItemManager.get().getShopItem());
-		l.setSelectionEvent(new ItemSelectedEvent() {
-
-			@Override
-			public void onSelected(CustomListItem item) {
-				selected = item.getItem();
-				iconSelected = new Image(GM.skin.getRegion("Help"));
-				selectedName.setText(item.getItem().getName());
-				selectedDesc.setText(item.getItem().getDesc());
-				selectedGold.setText(LocalManager.get().getHudBundle().format("shop.selected.gold", item.getItem().getGold()));
-				btBuy.setDisabled(!selected.isBuyable());
-				selectedItemTable.setVisible(true);
-			}
-		});
 				
-		selectedItemTable = new Table(GM.skin);
-		
-		selectedItemTable.row();
-		iconSelected = new Image(GM.skin.getRegion("Help"));
-		selectedItemTable.add(iconSelected).size(64, 64);
-		
-		selectedName = new Label("", GM.skin);
-		selectedItemTable.add(selectedName).expandX();
-		selectedItemTable.row();
-		
-		selectedDesc = new Label("", GM.skin);
-		selectedDesc.setWrap(true);	
-		
-		
-		selectedItemTable.add(selectedDesc).colspan(2).width(380).height(150);
-		
-
-		selectedItemTable.row();
-		selectedGold = new Label("dsf", GM.skin);
-		selectedItemTable.add(selectedGold);
-
-		btBuy = new TextButton(LocalManager.get().getHUDString("shop.selected.buy"), GM.skin);
-		btBuy.addListener(new ClickListener() {
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				if (ItemManager.get().buyItem(selected)) {
-					selectedItemTable.setVisible(false);
-					l.setItems(ItemManager.get().getShopItem());
-					playerGold.setText("Gold: " + PlayerManager.get().getGold());
-				}
-				super.clicked(event, x, y);
-			}
-
-		});
-		btBuy.pad(0, 10, 10, 10);
-		selectedItemTable.add(btBuy);
-
-		selectedItemTable.setVisible(false);
-		SplitPane pan = new SplitPane(l.getPan(), selectedItemTable, false, GM.skin);
-		mainTable.add(pan);*/
-		//selectedItemTable.debug();
+		ScrollPane container = new ScrollPane(t, GM.skin);
+		Container<ScrollPane> scrollContainer = new Container<ScrollPane>(container);
+		scrollContainer.setBackground(GM.skin.getDrawable("panel"));
+		scrollContainer.pad(45, 10, 30, 10);
+		mainTable.add(scrollContainer);
+		mainTable.debug();
 	}
 
 	@Override

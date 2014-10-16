@@ -12,6 +12,7 @@
 	],
 	desc: item.1.desc,
 	icon: item_1_icon,
+	type: BOW,
 	id: 1
 },
 {
@@ -27,6 +28,7 @@
 	],
 	desc: item.2.desc,
 	icon: item_2_icon,
+	type: BOW,
 	id: 2
 },
 {
@@ -50,6 +52,7 @@
 	],
 	desc: item.3.desc,
 	icon: item_3_icon,
+	type: OBJECT,
 	id: 3
 }
 ]

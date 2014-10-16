@@ -26,9 +26,10 @@ public class Chicken {
 	private boolean dead;
 	private boolean jumping;
 	private float speed = 2;
+	private float timeFactor = 1;
 	private Bow bow;
 
-	private float width, height = 1.5f, scale;
+	private float width, height = .75f, scale;
 
 	private Skeleton skeleton;
 	private AnimationStateData stateData;
@@ -62,7 +63,7 @@ public class Chicken {
 
 		bow = new Bow(this);
 
-		for (Item item : ItemManager.get().getPlayerItem()) {
+		for (Item item : ItemManager.get().getEquiped()) {
 			for (PassiveSkill skill : item.getPassives()) {
 				handlePassiveSkill(skill);
 			}
@@ -125,12 +126,12 @@ public class Chicken {
 
 	public void update(State state, float delta) {
 		skeleton.setPosition(getX(), getY() - height * .5f);
-		animState.update(delta);
+		animState.update(delta * timeFactor);
 		animState.apply(skeleton);
 		skeleton.updateWorldTransform();
 		bow.setOrigin(chicken.getWorldCenter().x - width * .05f, chicken.getWorldCenter().y + height * .2f);
-		bow.update(state, delta);
-		
+		bow.update(state, delta * timeFactor);
+
 		if (state == State.PLAYING && !dead && chicken.getLinearVelocity().x < speed) {
 			chicken.setLinearVelocity(speed, chicken.getLinearVelocity().y);
 		}
@@ -230,6 +231,14 @@ public class Chicken {
 
 	public void setScale(float scale) {
 		this.scale = scale;
+	}
+
+	public float getTimeFactor() {
+		return timeFactor;
+	}
+
+	public void setTimeFactor(float timeFactor) {
+		this.timeFactor = timeFactor;
 	}
 
 }

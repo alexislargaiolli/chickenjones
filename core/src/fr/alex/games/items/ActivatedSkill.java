@@ -29,6 +29,10 @@ public class ActivatedSkill {
 	public void setSkill(ActiveSkill skill) {
 		this.skill = skill;
 	}
+	
+	public int getCounterValue(){
+		return Math.round(skill.getCooldown() - (elapsedTime - skill.getDuration()));
+	}
 
 	public float getElapsedTime() {
 		return elapsedTime;

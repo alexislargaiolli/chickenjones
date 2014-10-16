@@ -20,28 +20,35 @@ public class GameCollisions implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-		
+
 	}
 
 	private void arrowContact(Arrow arrow, Body arrowBody, Object other, Body otherBody, Contact contact) {
 		if (other instanceof UserData) {
 			UserData ud = (UserData) other;
-			arrowContactUserData(arrow, arrowBody, ud, otherBody);
+			if (!ud.isAlreadyHit()) {
+
+				ud.hit(otherBody);
+				if (arrow.getContactCount() == 0) {
+					GM.hitCount++;
+				}
+				arrow.contact();
+			}
+			if (ud.isCoin()) {
+				contact.setEnabled(false);
+			}
 			if (ud.isStick()) {
 				Vector2 contactPoint = contact.getWorldManifold().getPoints()[0];
-				
-				if (contactPoint.dst(arrow.getHead()) < .05f) {
-					arrow.getmBody().setLinearVelocity(0, 0);
-					arrowToStick.add(new StickyInfo(arrow, ud));
+				contact.setEnabled(false);
+				if (contactPoint.dst(arrow.getHead()) < .3f) {
+					arrowToStick.add(new StickyInfo(arrow, ud, contactPoint));
+				} else {
+					contact.setEnabled(false);
 				}
 			}
-		}
-		if (other instanceof Chicken) {
-			//arrow.setDead(true);
+		} else if (other instanceof Chicken) {
 			contact.setEnabled(false);
 		}
-
-		arrow.setTimeBeforeDeath(3);
 	}
 
 	private void playerContact(Chicken player, Body playerBody, Object other, Body otherBody, Contact contact) {
@@ -51,33 +58,14 @@ public class GameCollisions implements ContactListener {
 			((UserData) other).playerContact(otherBody, player);
 
 		} else if (other instanceof Arrow) {
-			//((Arrow) other).setDead(true);
-			contact.setEnabled(false);			
+			contact.setEnabled(false);
+			/*
+			 * if (((Arrow)
+			 * other).getmBody().getLinearVelocity().dst(Vector2.Zero) < 3) {
+			 * ((Arrow) other).setDead(true); GM.arrowCount++; }
+			 */
 		} else {
 			player.setJumping(false);
-		}
-	}
-
-	private void arrowContactArrow(Arrow arrow1, Arrow arrow2) {
-
-	}
-
-	private void arrowContactUserData(Arrow arrow1, Body arrowBody, UserData ud, Body udBody) {
-		if (arrow1.maxContactReached()) {
-			if (ud.isCoin()) {
-				GM.hitCount++;
-				ud.hit(udBody);
-			}
-		} else {
-			if (ud.isDestroyable()) {
-				GM.hitCount++;
-			}
-			ud.hit(udBody);
-			arrow1.contact();
-			if (ud.isMortal()) {
-				arrow1.setTimeBeforeDeath(0);
-				arrow1.setDead(true);
-			}
 		}
 	}
 
@@ -93,16 +81,14 @@ public class GameCollisions implements ContactListener {
 		Object o2 = contact.getFixtureB().getBody().getUserData();
 		Body b1 = contact.getFixtureA().getBody();
 		Body b2 = contact.getFixtureB().getBody();
-		if (o1 != null && o1 instanceof Arrow) {
+		if (o1 instanceof Arrow) {
 			arrowContact((Arrow) o1, b1, o2, b2, contact);
-		}
-		if (o2 != null && o2 instanceof Arrow) {
+		} else if (o2 instanceof Arrow) {
 			arrowContact((Arrow) o2, b2, o1, b1, contact);
 		}
-		if (o1 != null && o1 instanceof Chicken) {
+		if (o1 instanceof Chicken) {
 			playerContact((Chicken) o1, b1, o2, b2, contact);
-		}
-		if (o2 != null && o2 instanceof Chicken) {
+		} else if (o2 instanceof Chicken) {
 			playerContact((Chicken) o2, b2, o1, b1, contact);
 		}
 	}

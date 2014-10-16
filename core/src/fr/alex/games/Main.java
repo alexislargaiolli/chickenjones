@@ -28,7 +28,7 @@ public class Main extends Game {
 		Gdx.app.log("Main", "init");
 		GM.assetManager = new AssetManager();		
 		GM.assetManager.setLoader(RubeScene.class, new RubeSceneAsyncLoader(new InternalFileHandleResolver()));		
-		GM.skin = new Skin(Gdx.files.internal("ui/ui.json"));
+		GM.skin = new Skin(Gdx.files.internal("ui/ui.json"));		
 		ScreenManager.getInstance().initialize(this);
 		ScreenManager.getInstance().show(Screens.INTRO);
 		LocalManager.get();
@@ -100,4 +100,12 @@ public class Main extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		super.render();
 	}
+
+	@Override
+	public void dispose() {
+		GM.itemsAtlas.dispose();
+		super.dispose();
+	}
+	
+	
 }

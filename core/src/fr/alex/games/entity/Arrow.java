@@ -24,7 +24,9 @@ public class Arrow extends SimpleSpatial {
 
 	public Arrow(Body body, float rotationInDegrees, Vector2 size, Vector2 center, TextureRegion region, PooledEffect effect) {
 		super(region, false, body, Color.WHITE, size, center, rotationInDegrees);
-		mSprite.setSize(size.x * 1.2f, size.y);
+		mSprite.setSize(size.x, size.y);
+		//mSprite.setOrigin(size.x*.5f, size.y);
+		mSprite.setScale(1, 1.6f);		
 		this.effect = effect;
 		dieing = false;
 		dead = false;
@@ -54,8 +56,13 @@ public class Arrow extends SimpleSpatial {
 
 	public static Body createBody(float x, float y, float width, float height) {
 		PolygonShape shape = new PolygonShape();
-		shape.set(new float[] { width * -.5f, 0, width * .25f, height * .5f, width * .5f, 0, width * .25f, -height * .5f });
+		
+		//Polygon arrow
+		//shape.set(new float[] { width * -.5f, 0, width * .25f, height * .5f, width * .5f, 0, width * .25f, -height * .5f });
 
+		//Rectangle
+		shape.set(new float[] { -width * .5f, -height * .5f, -width * .5f, height * .5f, width * .5f, height * .5f, width * .5f, -height * .5f });
+		
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.position.set(x, y);

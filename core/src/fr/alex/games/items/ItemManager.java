@@ -20,6 +20,7 @@ public class ItemManager {
 	}
 
 	private List<Item> items = new ArrayList<Item>();
+	private List<Item> equiped = new ArrayList<Item>();
 	private List<Item> playerItem = new ArrayList<Item>();
 
 	@SuppressWarnings("unchecked")
@@ -41,12 +42,20 @@ public class ItemManager {
 		
 	}
 	
-	private void refreshList(){
+	public void refreshList(){
 		Gdx.app.log("ItemManager", "Refreshing list");
 		playerItem.clear();
+		equiped.clear();
 		for (Item i : items) {
 			if (PlayerManager.get().hasItem(i.getId())) {
 				playerItem.add(i);
+			}
+		}
+		for(ItemType type : ItemType.values()){
+			int id = PlayerManager.get().getEquipedItem(type);
+			if(id != -1){
+				Item i = getItem(id);
+				equiped.add(i);
 			}
 		}
 		Gdx.app.log("ItemManager", "List refreshed");
@@ -70,6 +79,15 @@ public class ItemManager {
 		Gdx.app.log("ItemManager", "Shop item built");
 		return result;
 	}
+	
+	public Item getItem(int id){
+		for(Item i : items){
+			if(i.getId() == id){
+				return i;
+			}
+		}
+		return null;
+	}
 
 	public List<Item> getItems() {
 		return items;
@@ -85,6 +103,14 @@ public class ItemManager {
 
 	public void setPlayerItem(List<Item> playerItem) {
 		this.playerItem = playerItem;
+	}
+
+	public List<Item> getEquiped() {
+		return equiped;
+	}
+
+	public void setEquiped(List<Item> equiped) {
+		this.equiped = equiped;
 	}
 
 }

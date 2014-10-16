@@ -7,9 +7,11 @@ import fr.alex.games.GM;
 public class UserData {
 	int life = 1;
 	int coins = 0;
+	boolean alreadyHit;
 	boolean destroyable;
 	boolean mortal;
 	boolean coin;
+	boolean star;
 	boolean stick;
 	SimpleSpatial spatial;
 	
@@ -21,23 +23,31 @@ public class UserData {
 		return life == 0;
 	}
 	
-	public void hit(Body body){
-		if(coins > 0){
+	public void hit(Body body){		
+		if(coin && !alreadyHit){
 			GM.gold += coins;
+			coins = 0;
 			EffectManager.get().goldEffect(body.getPosition().x, body.getPosition().y);
 		}
-		if(destroyable){
+		if(star && !alreadyHit){
+			GM.stars += 1;
+		}
+		if(destroyable && !isDead()){
 			life--;
 			spatial.nextImage();
 			if(isDead()){
 				EffectManager.get().dustEffect(body.getPosition().x, body.getPosition().y);
 			}
-		}		
+		}
+		alreadyHit = true;
 	}
 	
 	public void playerContact(Body body, Chicken p){
 		if(mortal){
 			p.setDead(true);
+		}
+		if(coin || star){
+			hit(body);
 		}
 	}
 
@@ -95,5 +105,21 @@ public class UserData {
 
 	public void setStick(boolean stick) {
 		this.stick = stick;
+	}
+
+	public boolean isStar() {
+		return star;
+	}
+
+	public void setStar(boolean star) {
+		this.star = star;
+	}
+
+	public boolean isAlreadyHit() {
+		return alreadyHit;
+	}
+
+	public void setAlreadyHit(boolean alreadyHit) {
+		this.alreadyHit = alreadyHit;
 	}
 }

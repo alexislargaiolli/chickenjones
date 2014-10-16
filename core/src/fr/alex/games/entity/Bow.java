@@ -2,12 +2,14 @@ package fr.alex.games.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.Animation;
 import com.esotericsoftware.spine.BoneData;
 import com.esotericsoftware.spine.Skeleton;
@@ -19,15 +21,38 @@ import fr.alex.games.GM;
 import fr.alex.games.screens.GameScreen.State;
 
 public class Bow {
-	private Vector2 origin;
+	/**
+	 * Default shoot strength
+	 */
 	private float strength;
+
+	/**
+	 * Current shoot strength
+	 */
+	private float currentStrength;
+
+	private boolean bend = false;
+
+	private float bendSize = 0f;
+
+	private Vector2 origin;
+
 	private Vector2 velocity;
 
 	private Skeleton skeleton;
 	private Animation animShot;
+	private Animation animBend;
+	private Animation currentAnim;
 	private BoneData root;
 	private float animTime = 0, animDuration = .5f;
 	private float angle;
+	private TextureRegion arrowTexture;
+	private PooledEffect effect;
+
+	float widthArrow = .45f;
+	float heightArrow = .05f;
+	float arrowCount = 1;
+	private Sprite arrowSprite;
 
 	public Bow(Chicken player) {
 		super();
@@ -41,10 +66,12 @@ public class Bow {
 		root = skeletonData.findBone("root");
 		root.setScale(player.getScale(), player.getScale());
 		root.setRotation(30);
-		
+
 		animShot = skeletonData.findAnimation("shot");
+		animBend = skeletonData.findAnimation("bend");
 
 		skeleton = new Skeleton(skeletonData);
+		arrowSprite = new Sprite();
 	}
 
 	public void shot() {
@@ -53,39 +80,124 @@ public class Bow {
 
 	public void update(State state, float delta) {
 		animTime += delta;
-		if (animTime <= animDuration) {
-			animShot.apply(skeleton, animTime - delta, animTime, false, null);
+		if (currentAnim != null && animTime <= animDuration) {
+			currentAnim.apply(skeleton, animTime - delta, animTime, false, null);
 		}
 		skeleton.getRootBone().setRotation(angle);
 		skeleton.setPosition(origin.x, origin.y);
 		skeleton.updateWorldTransform();
+
+		if (bend) {
+			currentStrength = Math.max(bendSize * strength, strength * .5f);
+			if (currentStrength > strength) {
+				currentStrength = strength;
+			}
+		}
 	}
 
 	public void draw(SpriteBatch batch, SkeletonRenderer skeletonRenderer) {
 		skeletonRenderer.draw(batch, skeleton);
+		if (bend) {
+			if (arrowCount > 1) {
+				for (int i = 0; i < arrowCount; ++i) {
+
+					float x = origin.x;
+					float y = origin.y;
+					float j = i - arrowCount * .5f;
+					if (j < arrowCount * .5f) {
+						x -= MathUtils.cosDeg(angle + 90) * j * .05f;
+						y -= MathUtils.sinDeg(angle + 90) * j * .05f;
+					} else if (j > arrowCount * .5f) {
+						x += MathUtils.cosDeg(angle + 90) * j * .05f;
+						y += MathUtils.sinDeg(angle + 90) * j * .05f;
+					}
+
+					arrowSprite.setPosition(x - MathUtils.cosDeg(angle) * (widthArrow * bendSize) * .5f, y - MathUtils.sinDeg(angle) * (widthArrow * bendSize) * .5f);
+					arrowSprite.setRotation(angle);
+					arrowSprite.draw(batch);
+				}
+			} else {
+				arrowSprite.setPosition(origin.x - MathUtils.cosDeg(angle) * (widthArrow * bendSize) * .5f, origin.y - MathUtils.sinDeg(angle) * (widthArrow * bendSize) * .5f);
+				arrowSprite.setRotation(angle);
+				arrowSprite.draw(batch);
+			}
+		}
 	}
 
 	public Vector2 computeVelocity() {
-		return velocity.set(strength * (float) Math.cos(getAngleRad()), strength * (float) Math.sin(getAngleRad()));
+		return velocity.set(currentStrength * (float) Math.cos(getAngleRad()), currentStrength * (float) Math.sin(getAngleRad()));
 	}
 
-	public Arrow fire(TextureRegion region, PooledEffect effect) {
-		float width = .3f;
-		float height = .04f;
-		Body body = Arrow.createBody(origin.x, origin.y, width, height);
-		body.setTransform(origin.x, origin.y, getAngleRad());
+	/**
+	 * Start bending of the bow
+	 */
+	public void bend(TextureRegion region, PooledEffect effect) {
+		bend = true;
+		currentStrength = 0f;
+		animTime = 0;
+		currentAnim = animBend;
+		bendSize = 0;
+		this.effect = effect;
+		this.arrowTexture = region;
+		arrowSprite.setRegion(region);
+		arrowSprite.setScale(1, 1.6f);
+		arrowSprite.setSize(widthArrow, heightArrow);
+		arrowSprite.setPosition(origin.x, origin.y);
+		arrowSprite.setRotation(angle);
+	}
 
-		body.setLinearVelocity(computeVelocity().cpy());
-		body.setAngularDamping(2f);
+	/**
+	 * Release bend and shot an arrow
+	 * 
+	 * @param region
+	 * @param effect
+	 * @return
+	 */
+	public Array<Arrow> fire() {
+		bend = false;
+		Array<Arrow> arrows = new Array<Arrow>();
+		if (arrowCount > 1) {
+			for (int i = 0; i < arrowCount; ++i) {
+				float x = origin.x;
+				float y = origin.y;
+				float j = i - arrowCount * .5f;
+				if (j < arrowCount * .5f) {
+					x -= MathUtils.cosDeg(angle + 90) * j * .05f;
+					y -= MathUtils.sinDeg(angle + 90) * j * .05f;
+				} else if (j > arrowCount * .5f) {
+					x += MathUtils.cosDeg(angle + 90) * j * .05f;
+					y += MathUtils.sinDeg(angle + 90) * j * .05f;
+				}
+				x = x - MathUtils.cosDeg(angle) * widthArrow * .5f;
+				y = y - MathUtils.sinDeg(angle) * widthArrow * .5f;
 
-		Arrow arrow = new Arrow(body, getAngleRad(), new Vector2(width, height), new Vector2(), region, effect);
-		body.setUserData(arrow);
+				Arrow arrow = createArrow(x, y);
+				arrows.add(arrow);
+			}
+		} else {
+			Arrow arrow = createArrow(origin.x, origin.y);
+			arrows.add(arrow);
+		}
 
 		animTime = 0;
-		return arrow;
+		currentAnim = animShot;
+		currentStrength = 0;
+		return arrows;
 	}
 	
-	public float getAngleRad(){
+	private Arrow createArrow(float x, float y){
+		Body body = Arrow.createBody(x, y, widthArrow, heightArrow);
+		body.setTransform(x, y, getAngleRad());
+
+		body.setLinearVelocity(computeVelocity().cpy());
+		body.setAngularDamping(1.5f);
+
+		Arrow arrow = new Arrow(body, getAngleRad(), new Vector2(widthArrow, heightArrow), new Vector2(), arrowTexture, effect);
+		body.setUserData(arrow);
+		return arrow;
+	}
+
+	public float getAngleRad() {
 		return MathUtils.degreesToRadians * angle;
 	}
 
@@ -124,6 +236,42 @@ public class Bow {
 
 	public void setAngle(float angle) {
 		this.angle = angle;
+	}
+
+	public boolean isBend() {
+		return bend;
+	}
+
+	public float getBendSize() {
+		return bendSize;
+	}
+
+	public void setBendSize(float bendSize) {
+		this.bendSize = bendSize;
+	}
+
+	public float getWidthArrow() {
+		return widthArrow;
+	}
+
+	public void setWidthArrow(float widthArrow) {
+		this.widthArrow = widthArrow;
+	}
+
+	public float getHeightArrow() {
+		return heightArrow;
+	}
+
+	public void setHeightArrow(float heightArrow) {
+		this.heightArrow = heightArrow;
+	}
+
+	public Sprite getArrowSprite() {
+		return arrowSprite;
+	}
+
+	public void setArrowSprite(Sprite arrowSprite) {
+		this.arrowSprite = arrowSprite;
 	}
 
 }

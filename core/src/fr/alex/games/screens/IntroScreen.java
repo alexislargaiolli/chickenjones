@@ -1,19 +1,19 @@
 package fr.alex.games.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import fr.alex.games.GM;
 
-public class IntroScreen extends MenuScreen {
-
+public class IntroScreen extends MenuScreen {	
+	
 	public IntroScreen() {
 		super();
 	}
 
 	@Override
 	public void render(float delta) {
-		if (Gdx.input.justTouched()) {
+		if (GM.assetManager.update()) {
+			GM.itemsAtlas = GM.assetManager.get("items/items.atlas");
 			ScreenManager.getInstance().show(fr.alex.games.screens.Screens.MAIN_MENU);
 		}
 		super.render(delta);
@@ -26,6 +26,7 @@ public class IntroScreen extends MenuScreen {
 	@Override
 	public void show() {
 		super.show();
+		GM.assetManager.load("items/items.atlas", TextureAtlas.class);
 	}
 
 	@Override

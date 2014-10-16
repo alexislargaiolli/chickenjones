@@ -37,21 +37,6 @@ public enum Screens {
 			return new GameScreen();
 		}
 	},
-
-
-	WIN {
-		@Override
-		protected com.badlogic.gdx.Screen getScreenInstance() {
-			return new WinScreen();
-		}
-	},
-	
-	LOOSE {
-		@Override
-		protected com.badlogic.gdx.Screen getScreenInstance() {
-			return new LooseScreen();
-		}
-	},
 	
 	SHOP {
 		@Override

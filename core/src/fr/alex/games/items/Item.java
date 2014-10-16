@@ -6,6 +6,7 @@ import fr.alex.games.saves.PlayerManager;
 
 public class Item {	
 	private int id;
+	private ItemType type;
 	private String name;
 	private String desc;
 	private int gold;
@@ -71,6 +72,14 @@ public class Item {
 
 	public void setActives(ArrayList<ActiveSkill> actives) {
 		this.actives = actives;
+	}
+
+	public ItemType getType() {
+		return type;
+	}
+
+	public void setType(ItemType type) {
+		this.type = type;
 	}
 
 }

@@ -60,9 +60,9 @@ public class MainMenuScreen extends MenuScreen{
 			}
 			
 		});
-		btPlay.pad(0, 10, 10, 10);
+		btPlay.pad(10, 0, 10, 0);
 		mainTable.add(btPlay);
-		mainTable.row().expand();
+		mainTable.row();
 		
 		TextButton bt = new TextButton("Shop", GM.skin);
 		bt.addListener(new ClickListener(){
@@ -74,7 +74,21 @@ public class MainMenuScreen extends MenuScreen{
 			}
 			
 		});
-		bt.pad(0, 10, 10, 10);
+		bt.pad(10, 0, 10, 0);
+		mainTable.add(bt);
+		mainTable.row().expand();
+		
+		bt = new TextButton("Equipements", GM.skin);
+		bt.addListener(new ClickListener(){
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				ScreenManager.getInstance().show(Screens.PLAYER);
+				super.clicked(event, x, y);
+			}
+			
+		});
+		bt.pad(10, 0, 10, 0);
 		mainTable.add(bt);
 		mainTable.row();
 	}
