@@ -1,353 +1,290 @@
 
 scene1.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: MipMapLinearLinear,Linear
 repeat: none
-sand
+wood-shadow
   rotate: false
-  xy: 1, 743
-  size: 935, 280
-  orig: 935, 280
+  xy: 1, 844
+  size: 726, 175
+  orig: 726, 175
   offset: 0, 0
   index: -1
-TD211
+wall1
   rotate: false
-  xy: 1, 661
-  size: 465, 80
-  orig: 465, 80
-  offset: 0, 0
-  index: -1
-TD11
-  rotate: false
-  xy: 1, 579
-  size: 465, 80
-  orig: 465, 80
-  offset: 0, 0
-  index: -1
-T11
-  rotate: false
-  xy: 468, 661
-  size: 465, 80
-  orig: 465, 80
-  offset: 0, 0
-  index: -1
-T9
-  rotate: false
-  xy: 1, 112
-  size: 80, 465
-  orig: 80, 465
-  offset: 0, 0
-  index: -1
-TD9
-  rotate: false
-  xy: 83, 112
-  size: 80, 465
-  orig: 80, 465
-  offset: 0, 0
-  index: -1
-ball
-  rotate: false
-  xy: 165, 321
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-blade
-  rotate: false
-  xy: 165, 63
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-rope-chain
-  rotate: false
-  xy: 423, 65
-  size: 32, 512
-  orig: 32, 512
-  offset: 0, 0
-  index: -1
-metal-chain
-  rotate: false
-  xy: 457, 65
-  size: 32, 512
-  orig: 32, 512
-  offset: 0, 0
-  index: -1
-block32
-  rotate: false
-  xy: 1, 1
-  size: 240, 60
-  orig: 240, 60
-  offset: 0, 0
-  index: -1
-T10
-  rotate: false
-  xy: 468, 579
-  size: 234, 80
-  orig: 234, 80
-  offset: 0, 0
-  index: -1
-TD2
-  rotate: false
-  xy: 491, 420
-  size: 234, 157
-  orig: 234, 157
-  offset: 0, 0
-  index: -1
-T2
-  rotate: false
-  xy: 491, 261
-  size: 234, 157
-  orig: 234, 157
-  offset: 0, 0
-  index: -1
-wood-spike-block
-  rotate: false
-  xy: 491, 131
-  size: 256, 128
-  orig: 256, 128
-  offset: 0, 0
-  index: -1
-metal-spike-block
-  rotate: false
-  xy: 491, 1
-  size: 256, 128
-  orig: 256, 128
-  offset: 0, 0
-  index: -1
-TD10
-  rotate: false
-  xy: 704, 579
-  size: 234, 80
-  orig: 234, 80
-  offset: 0, 0
-  index: -1
-T1
-  rotate: false
-  xy: 727, 465
-  size: 224, 112
-  orig: 224, 112
-  offset: 0, 0
-  index: -1
-TD1
-  rotate: false
-  xy: 727, 351
-  size: 223, 112
-  orig: 223, 112
-  offset: 0, 0
-  index: -1
-T8
-  rotate: false
-  xy: 938, 789
-  size: 80, 234
-  orig: 80, 234
-  offset: 0, 0
-  index: -1
-TD210
-  rotate: false
-  xy: 727, 269
-  size: 234, 80
-  orig: 234, 80
-  offset: 0, 0
-  index: -1
-T6
-  rotate: false
-  xy: 749, 109
-  size: 159, 158
-  orig: 159, 158
-  offset: 0, 0
-  index: -1
-block13
-  rotate: false
-  xy: 243, 1
-  size: 120, 60
-  orig: 120, 60
-  offset: 0, 0
-  index: -1
-could1
-  rotate: false
-  xy: 749, 32
-  size: 187, 75
-  orig: 187, 75
+  xy: 729, 838
+  size: 250, 181
+  orig: 250, 181
   offset: 0, 0
   index: -1
 rope2
   rotate: false
-  xy: 910, 113
+  xy: 981, 865
   size: 29, 154
   orig: 29, 154
   offset: 0, 0
   index: -1
-block21
+wood-hole
   rotate: false
-  xy: 365, 1
-  size: 60, 60
-  orig: 60, 60
+  xy: 981, 843
+  size: 20, 20
+  orig: 20, 20
   offset: 0, 0
   index: -1
-TD8
+wood
   rotate: false
-  xy: 941, 33
-  size: 80, 234
-  orig: 80, 234
+  xy: 1, 744
+  size: 653, 98
+  orig: 653, 98
   offset: 0, 0
   index: -1
-rope
+wood3
   rotate: false
-  xy: 427, 3
-  size: 60, 60
-  orig: 60, 60
+  xy: 656, 772
+  size: 68, 70
+  orig: 68, 70
   offset: 0, 0
   index: -1
-coin
+block-shadow
   rotate: false
-  xy: 1, 70
-  size: 40, 40
-  orig: 40, 40
+  xy: 656, 660
+  size: 342, 110
+  orig: 342, 110
   offset: 0, 0
   index: -1
-metal-spike
+block33
   rotate: false
-  xy: 940, 659
-  size: 64, 128
-  orig: 64, 128
+  xy: 726, 774
+  size: 240, 62
+  orig: 240, 62
   offset: 0, 0
   index: -1
-wood-spike
+column-top2
   rotate: false
-  xy: 953, 529
-  size: 64, 128
-  orig: 64, 128
+  xy: 968, 822
+  size: 45, 14
+  orig: 45, 14
+  offset: 0, 0
+  index: -1
+column
+  rotate: false
+  xy: 1, 216
+  size: 186, 442
+  orig: 186, 442
+  offset: 0, 0
+  index: -1
+ground-bot-right
+  rotate: false
+  xy: 1, 6
+  size: 207, 208
+  orig: 207, 208
+  offset: 0, 0
+  index: -1
+block31
+  rotate: false
+  xy: 1, 681
+  size: 241, 61
+  orig: 241, 61
+  offset: 0, 0
+  index: -1
+column-bot
+  rotate: false
+  xy: 1, 660
+  size: 78, 19
+  orig: 78, 19
+  offset: 0, 0
+  index: -1
+long-light-wood-shadow
+  rotate: false
+  xy: 210, 628
+  size: 421, 51
+  orig: 421, 51
+  offset: 0, 0
+  index: -1
+block11
+  rotate: false
+  xy: 244, 681
+  size: 120, 61
+  orig: 120, 61
+  offset: 0, 0
+  index: -1
+block13
+  rotate: false
+  xy: 366, 682
+  size: 120, 60
+  orig: 120, 60
+  offset: 0, 0
+  index: -1
+column-top
+  rotate: false
+  xy: 488, 722
+  size: 77, 20
+  orig: 77, 20
+  offset: 0, 0
+  index: -1
+block-shadow2
+  rotate: false
+  xy: 633, 548
+  size: 342, 110
+  orig: 342, 110
+  offset: 0, 0
+  index: -1
+long-light-wood
+  rotate: false
+  xy: 210, 578
+  size: 421, 48
+  orig: 421, 48
+  offset: 0, 0
+  index: -1
+wood-block
+  rotate: false
+  xy: 189, 316
+  size: 229, 230
+  orig: 229, 230
+  offset: 0, 0
+  index: -1
+ground-top-middle
+  rotate: false
+  xy: 420, 465
+  size: 211, 111
+  orig: 211, 111
+  offset: 0, 0
+  index: -1
+wood-light-top-shadow
+  rotate: false
+  xy: 189, 263
+  size: 234, 51
+  orig: 234, 51
+  offset: 0, 0
+  index: -1
+column-middle
+  rotate: false
+  xy: 420, 344
+  size: 55, 119
+  orig: 55, 119
+  offset: 0, 0
+  index: -1
+ground-bot-middle
+  rotate: false
+  xy: 210, 54
+  size: 207, 207
+  orig: 207, 207
+  offset: 0, 0
+  index: -1
+wood-light-shadow
+  rotate: false
+  xy: 210, 1
+  size: 234, 51
+  orig: 234, 51
+  offset: 0, 0
+  index: -1
+ground-bot-left
+  rotate: false
+  xy: 419, 54
+  size: 207, 207
+  orig: 207, 207
+  offset: 0, 0
+  index: -1
+wood-dark-shadow
+  rotate: false
+  xy: 446, 1
+  size: 232, 51
+  orig: 232, 51
+  offset: 0, 0
+  index: -1
+fly
+  rotate: false
+  xy: 477, 269
+  size: 205, 194
+  orig: 205, 194
+  offset: 0, 0
+  index: -1
+wall2
+  rotate: false
+  xy: 628, 86
+  size: 249, 181
+  orig: 249, 181
+  offset: 0, 0
+  index: -1
+rope1
+  rotate: false
+  xy: 879, 392
+  size: 128, 154
+  orig: 128, 154
+  offset: 0, 0
+  index: -1
+base-block
+  rotate: false
+  xy: 684, 397
+  size: 185, 149
+  orig: 185, 149
+  offset: 0, 0
+  index: -1
+ground-top-left
+  rotate: false
+  xy: 684, 278
+  size: 208, 112
+  orig: 208, 112
+  offset: 0, 0
+  index: -1
+block
+  rotate: false
+  xy: 894, 241
+  size: 108, 149
+  orig: 108, 149
+  offset: 0, 0
+  index: -1
+wood-light
+  rotate: false
+  xy: 680, 36
+  size: 234, 48
+  orig: 234, 48
+  offset: 0, 0
+  index: -1
+spike-front
+  rotate: false
+  xy: 916, 66
+  size: 92, 173
+  orig: 92, 173
   offset: 0, 0
   index: -1
 
 scene12.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: MipMapLinearLinear,Linear
 repeat: none
-wood-spikes
-  rotate: false
-  xy: 1, 441
-  size: 256, 64
-  orig: 256, 64
-  offset: 0, 0
-  index: -1
-metal-spikes
-  rotate: false
-  xy: 1, 375
-  size: 256, 64
-  orig: 256, 64
-  offset: 0, 0
-  index: -1
-TD6
-  rotate: false
-  xy: 1, 215
-  size: 158, 158
-  orig: 158, 158
-  offset: 0, 0
-  index: -1
-TD5
-  rotate: false
-  xy: 1, 55
-  size: 158, 158
-  orig: 158, 158
-  offset: 0, 0
-  index: -1
-block33
-  rotate: false
-  xy: 259, 443
-  size: 240, 62
-  orig: 240, 62
-  offset: 0, 0
-  index: -1
-block31
-  rotate: false
-  xy: 501, 444
-  size: 241, 61
-  orig: 241, 61
-  offset: 0, 0
-  index: -1
-T5
-  rotate: false
-  xy: 161, 215
-  size: 158, 158
-  orig: 158, 158
-  offset: 0, 0
-  index: -1
-T4
-  rotate: false
-  xy: 161, 56
-  size: 157, 157
-  orig: 157, 157
-  offset: 0, 0
-  index: -1
-T27
-  rotate: false
-  xy: 321, 284
-  size: 157, 157
-  orig: 157, 157
-  offset: 0, 0
-  index: -1
-T7
-  rotate: false
-  xy: 321, 125
-  size: 157, 157
-  orig: 157, 157
-  offset: 0, 0
-  index: -1
-TD3
-  rotate: false
-  xy: 744, 348
-  size: 157, 157
-  orig: 157, 157
-  offset: 0, 0
-  index: -1
-block11
-  rotate: false
-  xy: 903, 444
-  size: 120, 61
-  orig: 120, 61
-  offset: 0, 0
-  index: -1
-chicken
-  rotate: false
-  xy: 320, 8
-  size: 128, 115
-  orig: 128, 115
-  offset: 0, 0
-  index: -1
-TD4
-  rotate: false
-  xy: 480, 284
-  size: 157, 157
-  orig: 157, 157
-  offset: 0, 0
-  index: -1
-TD7
-  rotate: false
-  xy: 480, 125
-  size: 157, 157
-  orig: 157, 157
-  offset: 0, 0
-  index: -1
-T3
-  rotate: false
-  xy: 639, 189
-  size: 157, 157
-  orig: 157, 157
-  offset: 0, 0
-  index: -1
-rope1
-  rotate: false
-  xy: 798, 192
-  size: 128, 154
-  orig: 128, 154
-  offset: 0, 0
-  index: -1
-could2
+enemy
   rotate: false
   xy: 1, 1
-  size: 98, 52
-  orig: 98, 52
+  size: 242, 170
+  orig: 242, 170
+  offset: 0, 0
+  index: -1
+ground-top
+  rotate: false
+  xy: 245, 19
+  size: 209, 152
+  orig: 209, 152
+  offset: 0, 0
+  index: -1
+ground-top-right
+  rotate: false
+  xy: 456, 60
+  size: 210, 111
+  orig: 210, 111
+  offset: 0, 0
+  index: -1
+wood-dark
+  rotate: false
+  xy: 456, 10
+  size: 232, 48
+  orig: 232, 48
+  offset: 0, 0
+  index: -1
+spike-back
+  rotate: false
+  xy: 690, 8
+  size: 87, 163
+  orig: 87, 163
   offset: 0, 0
   index: -1

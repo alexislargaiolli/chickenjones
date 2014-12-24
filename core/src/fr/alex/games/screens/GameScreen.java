@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -35,7 +34,11 @@ import fr.alex.games.background.ParallaxBackground;
 import fr.alex.games.entity.Arrow;
 import fr.alex.games.entity.Chicken;
 import fr.alex.games.entity.EffectManager;
+import fr.alex.games.entity.Fly;
+import fr.alex.games.entity.Jump;
+import fr.alex.games.entity.MoveX;
 import fr.alex.games.entity.SimpleSpatial;
+import fr.alex.games.entity.SpineSpatial;
 import fr.alex.games.entity.UserData;
 import fr.alex.games.items.ActivatedSkill;
 import fr.alex.games.items.ActiveSkill;
@@ -147,12 +150,12 @@ public class GameScreen implements Screen, InputProcessor {
 	/**
 	 * Delta x for camera position relative to player position
 	 */
-	private float cameraDeltaX = 2f;
+	private float cameraDeltaX = 0f;
 
 	/**
 	 * Delta y for camera position relative to player position
 	 */
-	private float cameraDeltaY = 1f;
+	private float cameraDeltaY = 1.5f;
 
 	/**
 	 * Drag constant for arrow rotation
@@ -188,7 +191,7 @@ public class GameScreen implements Screen, InputProcessor {
 	 * True to draw box 2d debug lines
 	 */
 	private boolean debug;
-	
+
 	private float maxBendSize;
 
 	public GameScreen() {
@@ -215,25 +218,27 @@ public class GameScreen implements Screen, InputProcessor {
 		GM.hitCount = 0;
 		GM.gold = 0;
 		GM.stars = 0;
-		GM.maxArrowCount = 10;
+		GM.maxArrowCount = 40;
 		GM.arrowCount = GM.maxArrowCount;
-		maxBendSize = Gdx.graphics.getWidth() * .1f; 
+		maxBendSize = Gdx.graphics.getWidth() * .1f;
 		counter = 0;
 		arrows.clear();
 		activedSkills.clear();
 		reloadingSkills.clear();
 		lastTouch.set(1, 0, 0);
 
-		viewportHeight = 4f; // 4 meters in box 2d world
+		viewportHeight = 8f; // 6 meters in box 2d world
 		viewportWidth = viewportHeight * w / h;
 		camera = new OrthographicCamera(viewportWidth, viewportHeight);
 		cameraDeltaX = viewportWidth * .25f;
 		GM.ratio = (float) Gdx.graphics.getHeight() / viewportHeight;
 
 		Array<Body> tmp = GM.scene.getNamed(Body.class, "chicken");
-		chicken = new Chicken(tmp.get(0));
-		lastChickenPosition = new Vector2(chicken.getChicken().getPosition());
 		mRegionMap.put("arrow", GM.commonAtlas.findRegion("arrow"));
+		chicken = new Chicken(tmp.get(0), mRegionMap.get("arrow"));
+		tmp = GM.scene.getNamed(Body.class, "chickenSensor");
+		tmp.get(0).setUserData(chicken);
+		lastChickenPosition = new Vector2(chicken.getChicken().getPosition());
 
 		createSpatialsFromRubeImages(GM.scene);
 
@@ -395,33 +400,36 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+
+		// RayCastCallback callback;
+		/*
+		 * if (chicken.getBow().isBend()) { int nbPoint =
+		 * Math.round(Interpolation.exp5.apply(1, 30,
+		 * chicken.getBow().getBendSize() / 1)); for (int i = 2; i < nbPoint;
+		 * i++) { // three seconds at 60fps
+		 * trajectoryVelocty.set(chicken.getBow().computeVelocity().cpy());
+		 * startTrajectory.set(chicken.getBow().getOrigin()); Vector2
+		 * trajectoryPosition = getTrajectoryPoint(startTrajectory,
+		 * trajectoryVelocty, i); batch.draw(trajectoryTexture,
+		 * trajectoryPosition.x, trajectoryPosition.y, .05f, .05f); } }
+		 */
+		for (int i = 0; i < arrows.size; i++) {
+			Arrow a = arrows.get(i);
+			a.render(skeletonRenderer, batch, delta);
+		}
+
 		for (int i = 0; i < mSpatials.size; i++) {
 			SimpleSpatial s = mSpatials.get(i);
-			s.render(batch, delta);
+			s.render(skeletonRenderer, batch, delta);
 			if (s.getUserData() instanceof UserData) {
 				UserData ud = s.getUserData();
-				if (ud.isDead()) {
+				if (ud.isRemove()) {
 					mSpatials.removeIndex(i);
 					GM.scene.getWorld().destroyBody(s.getmBody());
 				}
 			}
 		}
 		chicken.draw(batch, skeletonRenderer);
-
-		// RayCastCallback callback;
-		if (chicken.getBow().isBend()) {
-			int nbPoint = Math.round(Interpolation.exp5.apply(1, 30, chicken.getBow().getBendSize() / 1));
-			for (int i = 2; i < nbPoint; i++) { // three seconds at 60fps
-				trajectoryVelocty.set(chicken.getBow().computeVelocity().cpy());
-				startTrajectory.set(chicken.getBow().getOrigin());
-				Vector2 trajectoryPosition = getTrajectoryPoint(startTrajectory, trajectoryVelocty, i);
-				batch.draw(trajectoryTexture, trajectoryPosition.x, trajectoryPosition.y, .05f, .05f);
-			}
-		}
-		for (int i = 0; i < arrows.size; i++) {
-			Arrow a = arrows.get(i);
-			a.render(batch, delta);
-		}
 
 		batch.end();
 
@@ -467,20 +475,26 @@ public class GameScreen implements Screen, InputProcessor {
 		mSpatials = new Array<SimpleSpatial>();
 
 		String altasName = (String) scene.getCustom(GM.world, "atlas");
-		TextureAtlas atlas = GM.assetManager.get(Main.SCENES_ATLAS_PATH + altasName, TextureAtlas.class);
+		TextureAtlas atlas = GM.assetManager.get(Main.SCENES_ATLAS_PATH + GM.level.getSceneAtlasFile(), TextureAtlas.class);
 		if ((images != null) && (images.size > 0)) {
 
 			for (int i = 0; i < images.size; i++) {
 				RubeImage image = images.get(i);
 				tmp.set(image.width, image.height);
 				String textureFileName = image.file.replace(".png", "");
-				System.out.println(textureFileName);
 				TextureRegion region = atlas.findRegion(textureFileName);
 				if (region == null) {
 					region = GM.commonAtlas.findRegion(textureFileName);
 				}
-				SimpleSpatial spatial = new SimpleSpatial(region, image.flip, image.body, image.color, tmp, image.center, image.angleInRads * MathUtils.radiansToDegrees);
+				SimpleSpatial spatial = null;
+				Boolean spine = (Boolean) GM.scene.getCustom(image, "spine");
 
+				if (spine != null) {
+					String file = (String) GM.scene.getCustom(image, "spineFile");
+					spatial = new SpineSpatial(file, image.flip, image.body, image.color, tmp, image.center, image.angleInRads);
+				} else {
+					spatial = new SimpleSpatial(region, image.flip, image.body, image.color, tmp, image.center, image.angleInRads * MathUtils.radiansToDegrees);
+				}
 				Boolean active = (Boolean) GM.scene.getCustom(image, "active");
 				if (active != null && active) {
 					UserData userData = new UserData(spatial);
@@ -511,6 +525,12 @@ public class GameScreen implements Screen, InputProcessor {
 						userData.setStar(star);
 					}
 
+					Boolean fly = (Boolean) GM.scene.getCustom(image, "fly");
+					if (fly != null && fly) {
+						Fly p = new Fly(userData);
+						spatial.addProperties(p);
+					}
+
 					Integer coins = (Integer) GM.scene.getCustom(image, "coins");
 					if (coins != null) {
 						userData.setCoins(coins);
@@ -519,6 +539,27 @@ public class GameScreen implements Screen, InputProcessor {
 					Integer life = (Integer) GM.scene.getCustom(image, "life");
 					if (life != null) {
 						userData.setLife(life);
+					}
+
+					Float speedX = (Float) GM.scene.getCustom(image, "speedX");
+					if (speedX != null) {
+						MoveX m = new MoveX(userData, spatial.getmBody().getPosition().cpy(), 1f, speedX);
+						spatial.addProperties(m);
+					}
+
+					Float durationBeforeRemove = (Float) GM.scene.getCustom(image, "durationBeforeDie");
+					if (durationBeforeRemove != null) {
+						userData.setTimeBeforeDie(durationBeforeRemove);
+					}
+
+					Float jumpSpeed = (Float) GM.scene.getCustom(image, "jumpSpeed");
+					if (jumpSpeed != null) {
+						Float jumpFrequence = (Float) GM.scene.getCustom(image, "jumpFrequence");
+						if (jumpFrequence == null) {
+							jumpFrequence = 5f;
+						}
+						Jump j = new Jump(userData, jumpSpeed, jumpFrequence);
+						spatial.addProperties(j);
 					}
 
 					Integer imgCount = (Integer) GM.scene.getCustom(image, "imageCount");
@@ -632,6 +673,15 @@ public class GameScreen implements Screen, InputProcessor {
 		if (keycode == Keys.D) {
 			debug = !debug;
 		}
+		if (keycode == Keys.W) {
+			if (chicken.getSpeed() > 0) {
+				chicken.setSpeed(0);
+				chicken.clearForce();
+			} else {
+				chicken.setSpeed(1);
+			}
+
+		}
 		return false;
 	}
 
@@ -642,42 +692,32 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (state == State.PLAYING && !isLost() && !isWin()) {
-			if (GM.arrowCount > 0) {
-				chicken.getBow().bend(mRegionMap.get("arrow"), null);
-				touchBeforeDrag.set(screenX, Gdx.graphics.getHeight() - screenY);
+		if (state == State.PLAYING) {
+			if (screenX < cameraDeltaX * GM.ratio) {
+				chicken.jump();
+			} else {
+				lastTouch.set(screenX, screenY, 0);
+				lastTouch = camera.unproject(lastTouch);
+
+				tmp.set(chicken.getBow().getOrigin());
+				tmp.sub(lastTouch.x, lastTouch.y);
+				chicken.getBow().setAngle(tmp.angle() + 180);
+				arrows.addAll(chicken.getBow().fire());
+				GM.arrowFiredCount++;
 			}
 		}
-
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if (state == State.PLAYING) {
-			if (chicken.getBow().isBend()) {
-				arrows.addAll(chicken.getBow().fire());
-				GM.arrowFiredCount++;
-				GM.arrowCount--;
-			}
-		}
+
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if (chicken.getBow().isBend()) {
 
-			float y = Gdx.graphics.getHeight() - screenY;
-			tmp.set(touchBeforeDrag);
-			float bendSize = Vector2.dst(screenX, y, touchBeforeDrag.x, touchBeforeDrag.y);
-			tmp.sub(screenX, y);
-			chicken.getBow().setAngle(tmp.angle());
-			bendSize = Math.min(1, bendSize / maxBendSize);
-			chicken.getBow().setBendSize(bendSize);
-
-			return true;
-		}
 		return false;
 	}
 

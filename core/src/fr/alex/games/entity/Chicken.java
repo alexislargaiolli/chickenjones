@@ -3,6 +3,8 @@ package fr.alex.games.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.esotericsoftware.spine.AnimationState;
@@ -25,43 +27,43 @@ public class Chicken {
 	private Body chicken;
 	private boolean dead;
 	private boolean jumping;
-	private float speed = 2;
+	private float speed = 4;
 	private float timeFactor = 1;
 	private Bow bow;
 
-	private float width, height = .75f, scale;
+	private float width, height = 1.2f, scale;
 
 	private Skeleton skeleton;
 	private AnimationStateData stateData;
 	private AnimationState animState;
 	private BoneData root;
 
-	public Chicken(Body chicken) {
+	public Chicken(Body chicken, TextureRegion defaultArrowTexture) {
 		this.chicken = chicken;
 		this.chicken.setBullet(true);
 		this.chicken.setUserData(this);
 
-		jumpVector = new Vector2(0, 40);
+		jumpVector = new Vector2(0, 150);
 
-		TextureAtlas atlas = GM.assetManager.get("chicken/skeleton.atlas", TextureAtlas.class);
+		TextureAtlas atlas = GM.assetManager.get("chicken/chicken.atlas", TextureAtlas.class);
 		SkeletonJson skeletonJson = new SkeletonJson(atlas);
-		SkeletonData skeletonData = skeletonJson.readSkeletonData(Gdx.files.internal("chicken/skeleton.json"));
+		SkeletonData skeletonData = skeletonJson.readSkeletonData(Gdx.files.internal("chicken/chicken.json"));
 
 		scale = height / skeletonData.getHeight();
 		width = skeletonData.getWidth() * scale;
-
 		stateData = new AnimationStateData(skeletonData);
 		root = skeletonData.findBone("root");
 		root.setScale(scale, scale);
 
 		skeleton = new Skeleton(skeletonData);
-		stateData.setMix("idle", "run", 0.2f);
+		stateData.setMix("idle", "run", 0.4f);
 		stateData.setMix("run", "jump", 0.4f);
+		stateData.setMix("jump", "run", 0.4f);
 		animState = new AnimationState(stateData);
 
 		idle();
 
-		bow = new Bow(this);
+		bow = new Bow(this, defaultArrowTexture);
 
 		for (Item item : ItemManager.get().getEquiped()) {
 			for (PassiveSkill skill : item.getPassives()) {
@@ -111,13 +113,6 @@ public class Chicken {
 	}
 
 	/**
-	 * Set the chicken animation to fall
-	 */
-	public void fall() {
-		animState.setAnimation(0, "jump", true);
-	}
-
-	/**
 	 * Set the chicken animation to idle
 	 */
 	public void idle() {
@@ -129,12 +124,20 @@ public class Chicken {
 		animState.update(delta * timeFactor);
 		animState.apply(skeleton);
 		skeleton.updateWorldTransform();
-		bow.setOrigin(chicken.getWorldCenter().x - width * .05f, chicken.getWorldCenter().y + height * .2f);
+		bow.setOrigin(chicken.getWorldCenter().x + width * .25f, chicken.getWorldCenter().y + height * .2f);
 		bow.update(state, delta * timeFactor);
 
 		if (state == State.PLAYING && !dead && chicken.getLinearVelocity().x < speed) {
 			chicken.setLinearVelocity(speed, chicken.getLinearVelocity().y);
 		}
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
 	}
 
 	public void draw(SpriteBatch batch, SkeletonRenderer skeletonRenderer) {
@@ -155,10 +158,17 @@ public class Chicken {
 	}
 
 	public void jump() {
-		if (!jumping) {
-			System.out.println("jump");
+		if (!jumping && MathUtils.isZero(chicken.getLinearVelocity().y)) {
 			jumping = true;
+			animState.setAnimation(0, "jump", true);
 			chicken.applyForceToCenter(new Vector2(jumpVector.x, jumpVector.y), true);
+		}
+	}
+
+	public void ground() {
+		if (jumping) {
+			jumping = false;
+			animState.setAnimation(0, "run", true);
 		}
 	}
 
@@ -195,10 +205,6 @@ public class Chicken {
 
 	public boolean isJumping() {
 		return jumping;
-	}
-
-	public void setJumping(boolean jumping) {
-		this.jumping = jumping;
 	}
 
 	public Body getChicken() {

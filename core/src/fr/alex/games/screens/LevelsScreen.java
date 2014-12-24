@@ -47,7 +47,7 @@ public class LevelsScreen extends MenuScreen {
 		for (final Level lvl : Level.values()) {
 			String btTexture = "level-locked";
 			boolean unlocked = false;
-			if (lvl.getIndex() == 1 || PlayerManager.get().hasFinishedLevel(lvl.getIndex())) {
+			if (lvl.getIndex() == 1 || PlayerManager.get().hasFinishedLevel(lvl.getIndex()-1)) {
 				unlocked = true;
 			}
 			if (unlocked) {

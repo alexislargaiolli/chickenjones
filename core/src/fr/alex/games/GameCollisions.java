@@ -20,20 +20,28 @@ public class GameCollisions implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-
+		Object o1 = contact.getFixtureA().getBody().getUserData();
+		Object o2 = contact.getFixtureB().getBody().getUserData();
+		if (contact.getFixtureA().isSensor()) {
+			if (o1 instanceof Chicken) {
+				chickenCollideGround((Chicken) o1, o2);
+			}
+		}
+		if (contact.getFixtureB().isSensor()) {
+			if (o2 instanceof Chicken) {
+				chickenCollideGround((Chicken) o2, o1);
+			}
+		}
 	}
 
 	private void arrowContact(Arrow arrow, Body arrowBody, Object other, Body otherBody, Contact contact) {
 		if (other instanceof UserData) {
 			UserData ud = (UserData) other;
-			if (!ud.isAlreadyHit()) {
-
-				ud.hit(otherBody);
-				if (arrow.getContactCount() == 0) {
-					GM.hitCount++;
-				}
-				arrow.contact();
+			ud.hit(otherBody);
+			if (arrow.getContactCount() == 0) {
+				GM.hitCount++;
 			}
+			arrow.contact();
 			if (ud.isCoin()) {
 				contact.setEnabled(false);
 			}
@@ -52,11 +60,13 @@ public class GameCollisions implements ContactListener {
 	}
 
 	private void playerContact(Chicken player, Body playerBody, Object other, Body otherBody, Contact contact) {
-
-		player.setJumping(false);
 		if (other instanceof UserData) {
-			((UserData) other).playerContact(otherBody, player);
-
+			UserData ud = ((UserData) other);
+			if (ud.isDead()) {
+				contact.setEnabled(false);
+			} else {
+				ud.playerContact(otherBody, player);
+			}
 		} else if (other instanceof Arrow) {
 			contact.setEnabled(false);
 			/*
@@ -64,15 +74,22 @@ public class GameCollisions implements ContactListener {
 			 * other).getmBody().getLinearVelocity().dst(Vector2.Zero) < 3) {
 			 * ((Arrow) other).setDead(true); GM.arrowCount++; }
 			 */
+		}
+	}
+
+	private void chickenCollideGround(Chicken chicken, Object other) {
+		if (other instanceof UserData) {
+			UserData ud = ((UserData) other);
+			if (!ud.isDead() && ud.isMortal()) {
+				chicken.setDead(true);
+			}
 		} else {
-			player.setJumping(false);
+			chicken.ground();
 		}
 	}
 
 	@Override
 	public void endContact(Contact contact) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -81,22 +98,27 @@ public class GameCollisions implements ContactListener {
 		Object o2 = contact.getFixtureB().getBody().getUserData();
 		Body b1 = contact.getFixtureA().getBody();
 		Body b2 = contact.getFixtureB().getBody();
+
 		if (o1 instanceof Arrow) {
 			arrowContact((Arrow) o1, b1, o2, b2, contact);
 		} else if (o2 instanceof Arrow) {
 			arrowContact((Arrow) o2, b2, o1, b1, contact);
 		}
 		if (o1 instanceof Chicken) {
-			playerContact((Chicken) o1, b1, o2, b2, contact);
+			if (contact.getFixtureA().isSensor()) {
+			} else {
+				playerContact((Chicken) o1, b1, o2, b2, contact);
+			}
 		} else if (o2 instanceof Chicken) {
-			playerContact((Chicken) o2, b2, o1, b1, contact);
+			if (contact.getFixtureB().isSensor()) {
+			} else {
+				playerContact((Chicken) o2, b2, o1, b1, contact);
+			}
 		}
 	}
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

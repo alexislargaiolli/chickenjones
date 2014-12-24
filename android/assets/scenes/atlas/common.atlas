@@ -3,37 +3,44 @@ common.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-arrow
+star
   rotate: false
-  xy: 1, 102
-  size: 300, 38
-  orig: 300, 38
+  xy: 1, 1
+  size: 242, 232
+  orig: 242, 232
   offset: 0, 0
   index: -1
 coin
   rotate: false
-  xy: 1, 5
-  size: 95, 95
-  orig: 95, 95
+  xy: 245, 9
+  size: 224, 224
+  orig: 224, 224
   offset: 0, 0
   index: -1
-star
+arrow
   rotate: false
-  xy: 98, 8
-  size: 96, 92
-  orig: 96, 92
+  xy: 471, 195
+  size: 300, 38
+  orig: 300, 38
+  offset: 0, 0
+  index: -1
+arrowtest
+  rotate: false
+  xy: 471, 161
+  size: 240, 32
+  orig: 240, 32
   offset: 0, 0
   index: -1
 chicken
   rotate: false
-  xy: 303, 25
+  xy: 471, 44
   size: 128, 115
   orig: 128, 115
   offset: 0, 0
   index: -1
 trajectory
   rotate: false
-  xy: 98, 1
+  xy: 245, 2
   size: 5, 5
   orig: 5, 5
   offset: 0, 0

@@ -13,40 +13,54 @@ public class UserData {
 	boolean coin;
 	boolean star;
 	boolean stick;
+	boolean remove;
+	float timeBeforeRemove = 0;
 	SimpleSpatial spatial;
-	
-	public UserData(SimpleSpatial spatial){
+
+	public UserData(SimpleSpatial spatial) {
 		this.spatial = spatial;
 	}
-	
-	public boolean isDead(){
+
+	public boolean isDead() {
 		return life == 0;
 	}
-	
-	public void hit(Body body){		
-		if(coin && !alreadyHit){
+
+	public void hit(Body body) {
+		if (coin && !alreadyHit) {
 			GM.gold += coins;
 			coins = 0;
 			EffectManager.get().goldEffect(body.getPosition().x, body.getPosition().y);
 		}
-		if(star && !alreadyHit){
+		if (star && !alreadyHit) {
 			GM.stars += 1;
 		}
-		if(destroyable && !isDead()){
+		if (destroyable && !isDead()) {
 			life--;
 			spatial.nextImage();
-			if(isDead()){
+			if(timeBeforeRemove == 0){
+				remove = true;
+			}
+			if (isDead()) {
 				EffectManager.get().dustEffect(body.getPosition().x, body.getPosition().y);
 			}
 		}
 		alreadyHit = true;
 	}
-	
-	public void playerContact(Body body, Chicken p){
-		if(mortal){
+
+	public void update(float delta) {
+		if (destroyable && isDead() && !remove) {
+			timeBeforeRemove -= delta;
+			if(timeBeforeRemove <= 0){
+				remove = true;
+			}
+		}
+	}
+
+	public void playerContact(Body body, Chicken p) {
+		if (mortal) {
 			p.setDead(true);
 		}
-		if(coin || star){
+		if (coin || star) {
 			hit(body);
 		}
 	}
@@ -121,5 +135,21 @@ public class UserData {
 
 	public void setAlreadyHit(boolean alreadyHit) {
 		this.alreadyHit = alreadyHit;
+	}
+
+	public float getTimeBeforeDie() {
+		return timeBeforeRemove;
+	}
+
+	public void setTimeBeforeDie(float timeBeforeDie) {
+		this.timeBeforeRemove = timeBeforeDie;
+	}
+
+	public boolean isRemove() {
+		return remove;
+	}
+
+	public void setRemove(boolean remove) {
+		this.remove = remove;
 	}
 }

@@ -1,5 +1,8 @@
 package fr.alex.games.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -8,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.esotericsoftware.spine.SkeletonRenderer;
 
 /**
  * Simple class for spatial (image) rendering. If a body reference is included,
@@ -25,9 +29,14 @@ public class SimpleSpatial {
 	protected final Vector2 mCenter = new Vector2();
 	protected final Vector2 mHalfSize = new Vector2();
 	protected float mRotation;
-	private static final Vector2 mTmp = new Vector2();
-	private UserData userData;
+	protected static final Vector2 mTmp = new Vector2();
+	protected UserData userData;
+	protected List<Property> properties;
 
+	protected SimpleSpatial(){
+		
+	}
+	
 	public SimpleSpatial(Texture texture, boolean flip, Body body, Color color, Vector2 size, Vector2 center, float rotationInDegrees) {
 		mSprite = new Sprite(texture);
 		defineSpatial(flip, body, color, size, center, rotationInDegrees);
@@ -36,6 +45,7 @@ public class SimpleSpatial {
 	public SimpleSpatial(TextureRegion region, boolean flip, Body body, Color color, Vector2 size, Vector2 center, float rotationInDegrees) {
 		mSprite = new Sprite(region);
 		defineSpatial(flip, body, color, size, center, rotationInDegrees);
+		this.properties = new ArrayList<Property>();
 	}
 
 	public void nextImage() {
@@ -70,7 +80,11 @@ public class SimpleSpatial {
 		mSprite.setPosition(mTmp.x, mTmp.y);
 	}
 
-	public void render(SpriteBatch batch, float delta) {
+	public void flipX(){
+		mSprite.setFlip(!mSprite.isFlipX(), mSprite.isFlipY());
+	}
+	
+	public void render(SkeletonRenderer skeletonRenderer, SpriteBatch batch, float delta) {
 		// if this is a dynamic spatial...
 		if (mBody != null) {
 			// use body information to render it...
@@ -83,6 +97,22 @@ public class SimpleSpatial {
 			// else just draw it wherever it was defined at initialization
 			mSprite.draw(batch);
 		}
+		if(properties != null){
+			for(Property p : properties){
+				p.update(delta);
+				p.draw(batch);
+			}
+		}
+		if(userData != null){
+			userData.update(delta);			
+		}
+	}
+	
+	public void addProperties(Property property){
+		if(properties == null){
+			properties = new ArrayList<Property>();
+		}
+		properties.add(property);
 	}
 
 	public Body getmBody() {

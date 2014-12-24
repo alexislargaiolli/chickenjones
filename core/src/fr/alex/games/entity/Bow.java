@@ -26,11 +26,6 @@ public class Bow {
 	 */
 	private float strength;
 
-	/**
-	 * Current shoot strength
-	 */
-	private float currentStrength;
-
 	private boolean bend = false;
 
 	private float bendSize = 0f;
@@ -44,21 +39,21 @@ public class Bow {
 	private Animation animBend;
 	private Animation currentAnim;
 	private BoneData root;
-	private float animTime = 0, animDuration = .5f;
+	private float animTime = 0, animDuration = .2f;
 	private float angle;
 	private TextureRegion arrowTexture;
 	private PooledEffect effect;
 
-	float widthArrow = .45f;
-	float heightArrow = .05f;
+	float widthArrow = .6f;
+	float heightArrow = .06f;
 	float arrowCount = 1;
 	private Sprite arrowSprite;
 
-	public Bow(Chicken player) {
+	public Bow(Chicken player, TextureRegion defaultArrowTexture) {
 		super();
 		origin = new Vector2();
 		velocity = new Vector2();
-		strength = 10f;
+		strength = 20f;
 
 		TextureAtlas atlas = GM.assetManager.get("chicken/bow.atlas", TextureAtlas.class);
 		SkeletonJson skeletonJson = new SkeletonJson(atlas);
@@ -72,6 +67,8 @@ public class Bow {
 
 		skeleton = new Skeleton(skeletonData);
 		arrowSprite = new Sprite();
+		arrowTexture = defaultArrowTexture;
+		bend();
 	}
 
 	public void shot() {
@@ -79,18 +76,24 @@ public class Bow {
 	}
 
 	public void update(State state, float delta) {
-		animTime += delta;
+
 		if (currentAnim != null && animTime <= animDuration) {
 			currentAnim.apply(skeleton, animTime - delta, animTime, false, null);
+			animTime += delta;
+			if (animTime >= animDuration) {
+				if (currentAnim.equals(animShot)) {
+					bend();
+				}
+			}
 		}
+
 		skeleton.getRootBone().setRotation(angle);
 		skeleton.setPosition(origin.x, origin.y);
 		skeleton.updateWorldTransform();
 
 		if (bend) {
-			currentStrength = Math.max(bendSize * strength, strength * .5f);
-			if (currentStrength > strength) {
-				currentStrength = strength;
+			if (bendSize <= 1) {
+				bendSize += delta;
 			}
 		}
 	}
@@ -105,19 +108,20 @@ public class Bow {
 					float y = origin.y;
 					float j = i - arrowCount * .5f;
 					if (j < arrowCount * .5f) {
-						x -= MathUtils.cosDeg(angle + 90) * j * .05f;
-						y -= MathUtils.sinDeg(angle + 90) * j * .05f;
+						x -= MathUtils.cosDeg(angle + 90) * j;
+						y -= MathUtils.sinDeg(angle + 90) * j;
 					} else if (j > arrowCount * .5f) {
-						x += MathUtils.cosDeg(angle + 90) * j * .05f;
-						y += MathUtils.sinDeg(angle + 90) * j * .05f;
+						x += MathUtils.cosDeg(angle + 90) * j;
+						y += MathUtils.sinDeg(angle + 90) * j;
 					}
 
-					arrowSprite.setPosition(x - MathUtils.cosDeg(angle) * (widthArrow * bendSize) * .5f, y - MathUtils.sinDeg(angle) * (widthArrow * bendSize) * .5f);
+					arrowSprite.setPosition(x - MathUtils.cosDeg(angle) * (widthArrow * bendSize), y - MathUtils.sinDeg(angle) * (widthArrow * bendSize));
 					arrowSprite.setRotation(angle);
 					arrowSprite.draw(batch);
 				}
 			} else {
-				arrowSprite.setPosition(origin.x - MathUtils.cosDeg(angle) * (widthArrow * bendSize) * .5f, origin.y - MathUtils.sinDeg(angle) * (widthArrow * bendSize) * .5f);
+				bendSize = Math.min(1, (animTime / animDuration));
+				arrowSprite.setPosition(origin.x - MathUtils.cosDeg(angle) * (widthArrow * bendSize), origin.y - MathUtils.sinDeg(angle) * (widthArrow * bendSize));
 				arrowSprite.setRotation(angle);
 				arrowSprite.draw(batch);
 			}
@@ -125,21 +129,18 @@ public class Bow {
 	}
 
 	public Vector2 computeVelocity() {
-		return velocity.set(currentStrength * (float) Math.cos(getAngleRad()), currentStrength * (float) Math.sin(getAngleRad()));
+		return velocity.set(strength * (float) Math.cos(getAngleRad()), strength * (float) Math.sin(getAngleRad()));
 	}
 
 	/**
 	 * Start bending of the bow
 	 */
-	public void bend(TextureRegion region, PooledEffect effect) {
+	public void bend() {
 		bend = true;
-		currentStrength = 0f;
+		bendSize = 0;
 		animTime = 0;
 		currentAnim = animBend;
-		bendSize = 0;
-		this.effect = effect;
-		this.arrowTexture = region;
-		arrowSprite.setRegion(region);
+		arrowSprite.setRegion(arrowTexture);
 		arrowSprite.setScale(1, 1.6f);
 		arrowSprite.setSize(widthArrow, heightArrow);
 		arrowSprite.setPosition(origin.x, origin.y);
@@ -154,7 +155,6 @@ public class Bow {
 	 * @return
 	 */
 	public Array<Arrow> fire() {
-		bend = false;
 		Array<Arrow> arrows = new Array<Arrow>();
 		if (arrowCount > 1) {
 			for (int i = 0; i < arrowCount; ++i) {
@@ -178,14 +178,13 @@ public class Bow {
 			Arrow arrow = createArrow(origin.x, origin.y);
 			arrows.add(arrow);
 		}
-
+		bend = false;
 		animTime = 0;
 		currentAnim = animShot;
-		currentStrength = 0;
 		return arrows;
 	}
-	
-	private Arrow createArrow(float x, float y){
+
+	private Arrow createArrow(float x, float y) {
 		Body body = Arrow.createBody(x, y, widthArrow, heightArrow);
 		body.setTransform(x, y, getAngleRad());
 
@@ -272,6 +271,22 @@ public class Bow {
 
 	public void setArrowSprite(Sprite arrowSprite) {
 		this.arrowSprite = arrowSprite;
+	}
+
+	public TextureRegion getArrowTexture() {
+		return arrowTexture;
+	}
+
+	public void setArrowTexture(TextureRegion arrowTexture) {
+		this.arrowTexture = arrowTexture;
+	}
+
+	public PooledEffect getEffect() {
+		return effect;
+	}
+
+	public void setEffect(PooledEffect effect) {
+		this.effect = effect;
 	}
 
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.esotericsoftware.spine.SkeletonRenderer;
 
 import fr.alex.games.GM;
 
@@ -33,7 +34,7 @@ public class Arrow extends SimpleSpatial {
 		this.size = size;
 	}
 
-	public void render(SpriteBatch batch, float delta) {
+	public void render(SkeletonRenderer skeletonRenderer, SpriteBatch batch, float delta) {
 		if (dieing) {
 			timeBeforeDeath -= delta;
 			if (timeBeforeDeath < 0) {
@@ -43,7 +44,7 @@ public class Arrow extends SimpleSpatial {
 		if (effect != null) {
 			// effect.setPosition(getWorldX(), getWorldY());
 		}
-		super.render(batch, delta);
+		super.render(skeletonRenderer, batch, delta);
 	}
 
 	public Vector2 getHead() {
@@ -72,7 +73,7 @@ public class Arrow extends SimpleSpatial {
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-		fixtureDef.density = 1f;
+		fixtureDef.density = 2f;
 		fixtureDef.restitution = .5f;
 		fixtureDef.friction = .5f;
 		body.createFixture(fixtureDef);

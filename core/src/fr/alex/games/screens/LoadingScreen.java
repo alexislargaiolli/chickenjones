@@ -39,7 +39,7 @@ public class LoadingScreen extends MenuScreen {
 		GM.assetManager.load(Main.SCENES_ATLAS_PATH + GM.level.getSceneAtlasFile(), TextureAtlas.class);
 		GM.assetManager.load(Main.COMMON_ATLAS_PATH, TextureAtlas.class);
 		GM.assetManager.load(Main.BACKGROUND_ATLAS_PATH + GM.level.getBackgroundFile(), TextureAtlas.class);
-		GM.assetManager.load("chicken/skeleton.atlas", TextureAtlas.class);
+		GM.assetManager.load("chicken/chicken.atlas", TextureAtlas.class);
 		GM.assetManager.load("chicken/bow.atlas", TextureAtlas.class);
 		super.show();
 	}

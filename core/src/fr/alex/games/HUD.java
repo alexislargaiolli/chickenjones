@@ -2,7 +2,6 @@ package fr.alex.games;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -207,7 +206,10 @@ public class HUD {
 		earnedGoldLabel.setText("0");
 		arrowFiredLabel.setText(LocalManager.get().getHudBundle().format("win.arrow.count", GM.arrowFiredCount));
 		hitCountLabel.setText(LocalManager.get().getHudBundle().format("win.hit.count", GM.hitCount));
-		int accuracy = (GM.hitCount * 100 / GM.arrowFiredCount);
+		int accuracy = 0;
+		if(GM.arrowFiredCount != 0){
+			accuracy = (GM.hitCount * 100 / GM.arrowFiredCount);
+		}
 		precisionLabel.setText(LocalManager.get().getHudBundle().format("win.accuarcy", accuracy));
 		animTime1 = 0;
 		animTime2 = 0;

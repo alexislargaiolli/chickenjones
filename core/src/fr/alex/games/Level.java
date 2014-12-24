@@ -1,7 +1,9 @@
 package fr.alex.games;
 
 public enum Level {
-	LEVEL_1(1, "scene1.json", "scene1.atlas", "egypt.atlas");
+	LEVEL_1(1, "level-1.json", "scene1.atlas", "egypt.atlas"),
+	LEVEL_2(2, "level-2.json", "scene1.atlas", "egypt.atlas"),
+	LEVEL_3(3, "level-3.json", "scene1.atlas", "egypt.atlas");
 
 	private int index;
 	private String sceneFile, sceneAtlasFile, backgroundFile;	
